@@ -1,0 +1,39 @@
+- FITUR
+
+USER HANYA 1 ADMIN SAJA,LOGIN MENGGUNAKAN USERNAME & PASSWORD
+
+1.Management Produk
+    - Tambah,Edit,Hapus,Munculkan Produk 
+        Data yang harus di isi ketika menambah Produk
+            - SKU / Kode Produk 
+            - Nama Produk
+            - Kategori Produk
+            - Harga Jual Produk
+            - Stok Limit (Alert akan muncul otomatis ketika stok produk kurang dari stok limit)
+            - Satuan Produk
+2.Management Kategori Produk
+    -Tambah,Edit,Hapus Kategori Produk
+        Data yang harus di isi ketika menambah Kategori Produk
+            - Nama Kategori
+3.Management Satuan Produk
+    -Tambah Edit,Hapus Satuan Produk
+          Data yang harus di isi ketika menambah Satuan Produk
+            - Nama Satuan
+4.Laporan Penjualan
+    -Lihat Laporan Penjualan (Bisa Filter Hari,Minggu,Bulan,Tanggal)
+5.Produk Terlaris
+    -Memunculkan Produk yang paling laris
+6.Produk mau habis
+    -Memunculkan Produk yang stoknya kurang dari stok limit
+7.Retur Penjualan
+    -Batalkan penjualan produk jika ada kesalahan input atau yang lain 
+8.Penjualan Produk
+    -Cara melakukan Penjualan Produk
+        -Scan Barcode produk
+        -Produk otomatis akan masuk ke keranjang dan akan di kalkulasi total Harga
+        -Klik Tombol bayar untuk menyelesaikan penjualan
+9.Management Stok Produk
+    -Tambah Stok Produk
+    -Penyesuaian Stok Produk
+        -Penyesuaian stok produk wajib pilih produk yang ingin di sesuaikan stoknya dan tipe penyesuaian (Penambahan/Pengurangan Stok)
+    -Riwayat Stok Produk
