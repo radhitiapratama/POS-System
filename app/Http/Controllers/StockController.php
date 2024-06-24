@@ -22,6 +22,7 @@ class StockController extends Controller
     public function index(Request $request)
     {
         $last_month = date("Y-m-t 23:59:59", strtotime("-1 month"));
+        $month_now = date("Y-m-t 23:59:59");
 
         // $model = Product::query()
         //     ->with(['category',])
@@ -42,6 +43,13 @@ class StockController extends Controller
         //     ])->orderBy("id", "DESC")->get()->take(1);
 
         if ($request->ajax()) {
+            $index = 0;
+
+            $search_value = $request->input("search.value");
+            $filter_month = $request->filter_month;
+            $date_initial_stock = date("Y-m-t 23:59:59", strtotime($filter_month . " -1 month"));
+            $date_remaining_stock = date("Y-m-t 23:59:59", strtotime($filter_month));
+
             $model = Product::query()
                 ->with(['category',])
                 ->whereHas("category", function ($q) {
@@ -51,22 +59,30 @@ class StockController extends Controller
                     'initial_stock' => StockHistory::query()
                         ->select("remaining_stock")
                         ->whereColumn('product_id', 'products.id')
-                        ->where("created_at", "<=", $last_month)
-                        ->latest()
+                        ->when($filter_month == null, function ($q) use ($last_month) {
+                            return $q->where("created_at", "<=", $last_month);
+                        })
+                        ->when($filter_month != null, function ($q) use ($date_initial_stock) {
+                            return $q->where("created_at", "<=", $date_initial_stock);
+                        })
+                        ->orderBy('created_at', 'DESC')
                         ->take(1),
                     'remaining_stock' => Stock::query()
                         ->select("stock")
                         ->whereColumn("product_id", "products.id")
+                        ->when($filter_month == null, function ($q) use ($month_now) {
+                            return $q->where("created_at", "<=", $month_now);
+                        })
+                        ->when($filter_month != null, function ($q) use ($date_remaining_stock) {
+                            return $q->where("created_at", "<=", $date_remaining_stock);
+                        })
+                        ->orderBy('created_at', 'DESC')
                         ->take(1)
                 ]);
 
-            $index = 0;
-
-            $search_value = $request->input("search.value");
-
             return DataTables::eloquent($model)
                 ->addIndexColumn()
-                ->filter(function ($q) use ($search_value) {
+                ->filter(function ($q) use ($search_value, $filter_month) {
                     if ($search_value != null || $search_value != "") {
                         $q->where("products.name", "LIKE", '%' . $search_value . "%")
                             ->orWhereHas('category', function ($query) use ($search_value) {
@@ -91,11 +107,11 @@ class StockController extends Controller
                     }
                     return $stock;
                 })
-                ->addColumn('action', function ($model) use (&$index) {
+                ->addColumn('action', function ($model) use (&$index, $filter_month) {
                     $index++;
                     $action_el = '
                     <div class="hstack gap-2 fs-15 d-flex justify-content-center">
-                        <a href="' . url("stock/$model->id/history") . '"
+                        <a href="' . url("stock/$model->id/history?filter_month=" . $filter_month . "") . '"
                             class="btn btn-icon btn-sm btn-info">
                             <i class="ri-history-line"></i>
                         </a>
@@ -266,29 +282,42 @@ class StockController extends Controller
         }
 
         if ($request->ajax()) {
-            // $model = Product::query()
-            //     ->with(['category',])
-            //     ->whereHas("category", function ($q) {
-            //         $q->whereNull("deleted_at");
-            //     })
-            //     ->addSelect([
-            //         'initial_stock' => StockHistory::query()
-            //             ->select("remaining_stock")
-            //             ->whereColumn('product_id', 'products.id')
-            //             ->where("created_at", "<=", $last_month)
-            //             ->latest()
-            //             ->take(1),
-            //         'remaining_stock' => Stock::query()
-            //             ->select("stock")
-            //             ->whereColumn("product_id", "products.id")
-            //             ->take(1)
-            //     ]);
+            $filter_month = $request->filter_month;
+            $start_date = null;
+            $end_date = null;
+
+            $is_filter_date_range = false;
+            $date_range_start = $request->filter_start_date;
+            $date_range_end = $request->filter_end_date;
+            if ($date_range_start != null && $date_range_end != null) {
+                $is_filter_date_range = true;
+                $date_range_start = $date_range_start . " 00:00:00";
+                $date_range_end = $date_range_end . " 23:59:59";
+            }
+
+            // return response()->json([
+            //     'a' => $date_range_start,
+            //     'b' => $date_range_end
+            // ]);
+
+            if ($filter_month != null) {
+                $start_date = date("Y-m-01 00:00:00", strtotime($filter_month));
+                $end_date = date("Y-m-t 23:59:59", strtotime($filter_month));
+            }
 
             $model = StockHistory::query()
                 ->with("product")
                 ->where("product_id", $product_id)
                 ->whereHas("product", function ($q) {
                     $q->whereNull("deleted_at");
+                })
+                ->when($filter_month != null && $is_filter_date_range == false, function ($q) use ($start_date, $end_date) {
+                    return $q->where("created_at", ">=", $start_date)
+                        ->where("created_at", "<=", $end_date);
+                })
+                ->when($is_filter_date_range == true, function ($q) use ($date_range_start, $date_range_end) {
+                    return $q->where("created_at", ">=", $date_range_start)
+                        ->where("created_at", "<=", $date_range_end);
                 });
 
             return DataTables::eloquent($model)

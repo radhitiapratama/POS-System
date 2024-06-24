@@ -65,7 +65,7 @@
                                     <li class="slide__category"><span class="category-name">Data Transaksi</span>
                                     </li>
                                     <li class="slide">
-                                        <a href="landing.html" class="side-menu__item">
+                                        <a href="{{ url('cashier') }}" class="side-menu__item">
                                             <i class="ri-macbook-line side-menu__icon custom-sidebar-icon"></i>
                                             <span class="side-menu__label">Kasir
                                             </span>
@@ -114,8 +114,6 @@
                                             <span class="side-menu__label">Produk Akan Habis
                                             </span>
                                         </a>
-                                    </li>
-                                    <li class="slide__category"><span class="category-name">Logout</span>
                                     </li>
                                 </ul>
                                 <div class="slide-right d-none" id="slide-right">

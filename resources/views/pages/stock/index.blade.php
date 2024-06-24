@@ -37,6 +37,16 @@
                         </div>
                     </div>
                 </div>
+                <div class="card-header">
+                    <div class="form-group">
+                        <label for="filter-month" class="form-label">Filter Bulan</label>
+                        <div class="input-group">
+                            <div class="input-group-text border-0"> <i class="ri-calendar-line"></i> </div>
+                            <input type="text" class="form-control flatpickr-input" id="filter-month"
+                                placeholder="Pilih..." readonly="readonly">
+                        </div>
+                    </div>
+                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <div id="datatable-basic_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
@@ -71,81 +81,100 @@
 
 @push('scripts')
     {{-- DataTable --}}
-    <link rel="stylesheet" href="noa-assets/assets/libs/datatables/1.12.1/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="noa-assets/assets/libs/datatables/responsive/2.3.0/css/responsive.bootstrap.min.css">
-    <link rel="stylesheet" href="noa-assets/assets/libs/datatables/buttons/2.2.3/css/buttons.bootstrap5.min.css">
-
+    <link rel="stylesheet" href="/noa-assets/assets/libs/datatables/1.12.1/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="/noa-assets/assets/libs/datatables/responsive/2.3.0/css/responsive.bootstrap.min.css">
+    <link rel="stylesheet" href="/noa-assets/assets/libs/datatables/buttons/2.2.3/css/buttons.bootstrap5.min.css">
     <!-- Sweetalerts CSS -->
-    <link rel="stylesheet" href="noa-assets/assets/libs/sweetalert2/sweetalert2.min.css">
+    <link rel="stylesheet" href="/noa-assets/assets/libs/sweetalert2/sweetalert2.min.css">
+    {{-- Flatpicker --}}
+    <link rel="stylesheet" href="/noa-assets/assets/libs/flatpickr/flatpickr.min.css">
+    <link rel="stylesheet" href="{{ asset('noa-assets/assets/libs/flatpickr/dist/plugins/monthSelect/style.css') }}">
 
     {{-- Datatable --}}
-    <script src="noa-assets/assets/libs/datatables/1.12.1/js/jquery.dataTables.min.js"></script>
-    <script src="noa-assets/assets/libs/datatables/1.12.1/js/dataTables.bootstrap5.min.js"></script>
-    <script src="noa-assets/assets/libs/datatables/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
-    <script src="noa-assets/assets/libs/datatables/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
-    <script src="noa-assets/assets/libs/datatables/buttons/2.2.3/js/buttons.print.min.js"></script>
-    <script src="noa-assets/assets/libs/ajax/libs/pdfmake/0.2.6/pdfmake.min.js"></script>
-    <script src="noa-assets/assets/libs/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script src="noa-assets/assets/libs/datatables/buttons/2.2.3/js/buttons.html5.min.js"></script>
-    <script src="noa-assets/assets/libs/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="noa-assets/assets/js/datatables.js"></script>
-
+    <script src="/noa-assets/assets/libs/datatables/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="/noa-assets/assets/libs/datatables/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+    <script src="/noa-assets/assets/libs/datatables/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
+    <script src="/noa-assets/assets/libs/datatables/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+    <script src="/noa-assets/assets/libs/datatables/buttons/2.2.3/js/buttons.print.min.js"></script>
+    <script src="/noa-assets/assets/libs/ajax/libs/pdfmake/0.2.6/pdfmake.min.js"></script>
+    <script src="/noa-assets/assets/libs/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="/noa-assets/assets/libs/datatables/buttons/2.2.3/js/buttons.html5.min.js"></script>
+    <script src="/noa-assets/assets/libs/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="/noa-assets/assets/js/datatables.js"></script>
+    {{-- Flatipicker --}}
+    {{-- <script src="/noa-assets/assets/libs/flatpickr/flatpickr.min.js"></script> --}}
+    <script src="{{ asset('noa-assets/assets/libs/flatpickr/dist/flatpickr.min.js') }}"></script>
+    <script src="{{ asset('noa-assets/assets/libs/flatpickr/dist/plugins/monthSelect/index.js') }}"></script>
 
 
 
     {{-- Sweetalert --}}
-    <script src="noa-assets/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+    <script src="/noa-assets/assets/libs/sweetalert2/sweetalert2.min.js"></script>
 
     <script>
-        // $("#table-product-category").DataTable();
-        $("#table-product-category").DataTable({
-            processing: true,
-            serverSide: true,
-            searchDelay: 1200,
-            ajax: '{{ url()->current() }}',
-            drawCallback: function(data) {
-                let json = data.json
-                console.log(json);
-            },
-            order: [1, "ASC"],
-            columnDefs: [{
-                width: '5px',
-                targets: [0, 5]
-            }],
-            columns: [{
-                    data: 'DT_RowIndex',
-                    name: 'DT_RowIndex',
-                    orderable: false,
-                    searchable: false
-                },
-                {
-                    data: 'name',
-                    name: 'name',
-                    render: function(data, type, row) {
-                        return `<div class='text-wrap' style="max-width: 200px; !important">${data}</div>`
+        function reloadDatatable() {
+            $("#table-product-category").DataTable().ajax.reload();
+        }
+
+        function createDatatable() {
+            $("#table-product-category").DataTable({
+                processing: true,
+                serverSide: true,
+                searchDelay: 1200,
+                ajax: {
+                    url: '{{ url()->current() }}',
+                    data: function(data) {
+                        data.filter_month = $("#filter-month").val();
                     }
                 },
-                {
-                    data: 'category.name',
-                    name: 'category.name'
+                drawCallback: function(data) {
+                    let json = data.json
+                    console.log(json);
                 },
+                order: [1, "ASC"],
+                columnDefs: [{
+                    width: '5px',
+                    targets: [0, 5]
+                }],
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'name',
+                        name: 'name',
+                        render: function(data, type, row) {
+                            return `<div class='text-wrap' style="max-width: 200px; !important">${data}</div>`
+                        }
+                    },
+                    {
+                        data: 'category.name',
+                        name: 'category.name'
+                    },
 
-                {
-                    data: 'initial_stock',
-                    name: 'initial_stock'
-                },
+                    {
+                        data: 'initial_stock',
+                        name: 'initial_stock'
+                    },
 
-                {
-                    data: 'remaining_stock',
-                    name: 'remaining_stock'
-                },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false,
-                },
-            ]
+                    {
+                        data: 'remaining_stock',
+                        name: 'remaining_stock'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false,
+                    },
+                ]
+            });
+        }
+
+        $(document).ready(function() {
+            createDatatable();
         });
 
         $(document).on("click", ".btn-delete", function() {
@@ -166,6 +195,22 @@
                 }
             });
         })
+
+        flatpickr("#filter-month", {
+            altInput: true,
+            altFormat: "F Y",
+            dateFormat: "Y-m",
+            plugins: [
+                new monthSelectPlugin({
+                    altFormat: true,
+                    dateFormat: "Y-m-01",
+                    altFormat: "F Y",
+                })
+            ],
+            onChange: function(selectedDates, dateStr, instance) {
+                reloadDatatable();
+            },
+        });
     </script>
 @endpush
 

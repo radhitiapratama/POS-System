@@ -29,16 +29,6 @@
             <form action="{{ route('product.store') }}" method="post">
                 @csrf
                 <div class="mb-3">
-                    <label for="barcode" class="form-label fs-14 text-dark">Barcode</label>
-                    <input type="text" class="form-control" id="barcode" name="barcode" placeholder=""
-                        value="{{ old('barcode') }}" maxlength="255">
-                    @error('barcode')
-                        <div class="text-danger mt-2" id="barcode">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-                <div class="mb-3">
                     <label for="name" class="form-label fs-14 text-dark">Nama</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder=""
                         value="{{ old('name') }}">
@@ -99,6 +89,16 @@
                         </div>
                     @enderror
                 </div>
+                <div class="mb-3">
+                    <label for="barcode" class="form-label fs-14 text-dark">Barcode</label>
+                    <input type="text" class="form-control" id="barcode" name="barcode" placeholder=""
+                        value="{{ old('barcode') }}" maxlength="255">
+                    @error('barcode')
+                        <div class="text-danger mt-2" id="barcode">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
                 <button class="btn btn-primary" type="submit">Submit</button>
             </form>
         </div>
@@ -124,6 +124,7 @@
         $("#unit_id").select2()
 
         let autoNumericOptions = {
+            minimumValue: 0,
             decimalPlaces: 0, // remove decimal
             digitGroupSeparator: '.', // Group separator
             decimalCharacter: ',', // Decimal character

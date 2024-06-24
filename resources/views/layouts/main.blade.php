@@ -1,4 +1,4 @@
-<html lang="en" dir="ltr" data-nav-layout="vertical" loader="enable">
+<html lang="en" dir="ltr" data-nav-layout="vertical" loader="enable" data-toggled="icon-overlay-close">
 
 <head><!-- Meta Data -->
     <meta charset="UTF-8">

@@ -23,4 +23,9 @@ class Product extends Model
     {
         return $this->belongsTo(Unit::class, 'unit_id', 'id');
     }
+
+    public function stock(): BelongsTo
+    {
+        return $this->belongsTo(Stock::class, 'id', 'product_id');
+    }
 }

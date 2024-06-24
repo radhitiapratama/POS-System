@@ -103,3 +103,16 @@
     background-color: rgb(143, 189, 86) !important;
     color: #fff !important;
 }
+
+.flatpickr-monthSelect-month.selected,
+.flatpickr-monthSelect-month.startRange,
+.flatpickr-monthSelect-month.endRange {
+    background-color: rgb(143, 189, 86) !important;
+    box-shadow: none !important;
+    color: #fff !important;
+    border-color: rgb(143, 189, 86) !important;
+}
+
+.flatpickr-day.inRange {
+    background: rgba(0, 0, 0, 0.1) !important;
+}

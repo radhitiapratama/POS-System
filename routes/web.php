@@ -1,14 +1,16 @@
 <?php
 
+use App\Http\Controllers\CashierController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\UnitController;
+use Illuminate\Routing\RouteAction;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     // return view("layouts.main");
-    return redirect("product-category");
+    return redirect("cashier");
 });
 
 
@@ -24,6 +26,9 @@ Route::prefix('stock')->group(function () {
     Route::post("stock-adjustment/store", [StockController::class, 'stockAdjustmentStore']);
     Route::get("{product_id}/history", [StockController::class, 'history']);
 });
+
+Route::get("cashier", [CashierController::class, 'index']);
+Route::post("cashier/product", [CashierController::class, '__ajax__getProduct']);
 
 
 // Ajax Request
