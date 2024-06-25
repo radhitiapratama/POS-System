@@ -39,7 +39,8 @@ Route::middleware("auth")->group(function () {
 
     //report
     Route::prefix("report")->group(function () {
-        Route::get("sales", [ReportSalesController::class, 'index']);
+        Route::match(['get', 'post'], "sales", [ReportSalesController::class, 'index']);
+        Route::match(['get', 'post'], "sales/{sales_id}", [ReportSalesController::class, 'show']);
     });
 
 

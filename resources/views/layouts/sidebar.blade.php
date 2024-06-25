@@ -90,7 +90,8 @@
                                                 <a href="javascript:void(0);">Laporan</a>
                                             </li>
                                             <li class="slide">
-                                                <a href="products" class="side-menu__item">Laporan Penjualan</a>
+                                                <a href="{{ url('report/sales') }}" class="side-menu__item">Laporan
+                                                    Penjualan</a>
                                             </li>
                                         </ul>
                                     </li>

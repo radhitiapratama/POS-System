@@ -116,3 +116,14 @@
 .flatpickr-day.inRange {
     background: rgba(0, 0, 0, 0.1) !important;
 }
+
+::placeholder {
+    color: rgba(0, 0, 0, .4) !important;
+    opacity: 1;
+    /* Firefox */
+}
+
+::-ms-input-placeholder {
+    /* Edge 12 -18 */
+    color: rgba(0, 0, 0, .4) !important;
+}

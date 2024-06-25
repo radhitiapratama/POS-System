@@ -9,57 +9,56 @@
             'title' => 'Laporan penjualan',
             'link' => '#',
         ],
+        [
+            'title' => 'Detail penjualan',
+            'link' => '#',
+        ],
     ],
-    'last_breadcumb' => 'Laporan penjualan',
+    'last_breadcumb' => 'Detail penjualan',
 ])
 @section('content')
-    {{-- <div class="row">
-        <div class="col-12 card custom-card">
-            <div class="card-header">
-                <div class="card-title">Laporan penjualan</div>
+    <div class="card custom-card">
+        <div class="card-header">
+            <div class="card-title w-100 d-flex justify-content-end align-items-center">
+                {{-- <div class="card-title">Tambah Produk</div> --}}
+                <a href="{{ url('report/sales') }}" class="btn btn-primary label-btn">
+                    <i class="ri-arrow-left-line label-btn-icon"></i>
+                    Kembali
+                </a>
             </div>
         </div>
-    </div> --}}
-    <input type="hidden" name="filter_start_date">
-    <input type="hidden" name="filter_end_date">
+    </div>
     <div class="row">
         <div class="col-xl-12">
             <div class="card custom-card">
-                <div class="card-header row">
-                    <div class="col-12 col-md-5">
-                        <label for="filter_date_range" class="form-label">Filter Tanggal</label>
-                        <div class="input-group w-100">
-                            <div class="input-group-text border-0"> <i class="ri-calendar-line"></i> </div>
-                            <input type="text" class="form-control flatpickr-input" id="filter_date_range"
-                                placeholder="Pilih..." readonly="readonly">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-3">
-                        <label for="" class="form-label">Nomor Invoice</label>
-                        <input type="text" class="form-control" id="input" class="form-control"
-                            placeholder="Cari berdasarkan No Invoice" name="filter_no_inv">
-                    </div>
+                <div class="card-header">
+                    <div class="card-title">No Invoice : {{ $sales->number_invoice }}</div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <div id="datatable-basic_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <table id="table-report-sales"
+                                    <table id="table-report-sales" style="width: 100% !important"
                                         class="table table-bordered text-nowrap w-100 dataTable no-footer"
                                         aria-describedby="datatable-basic_info">
                                         <thead>
                                             <tr>
                                                 <th width="5">#</th>
-                                                <th>Tanggal</th>
-                                                <th>No Inv</th>
-                                                <th>Total</th>
-                                                <th class="d-flex justify-content-center">Action
-                                                </th>
+                                                <th style="max-width: 30%">Produk</th>
+                                                <th style="max-width: 20%">Qty</th>
+                                                <th style="max-width: 20%">Harga</th>
+                                                <th style="max-width: 20%">Total</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                         </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th colspan="4"></th>
+                                                <th colspan="1" class="text-end">Total : </th>
+                                            </tr>
+                                        </tfoot>
                                     </table>
                                 </div>
                             </div>
@@ -77,8 +76,6 @@
     <link rel="stylesheet" href="/noa-assets/assets/libs/datatables/1.12.1/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="/noa-assets/assets/libs/datatables/responsive/2.3.0/css/responsive.bootstrap.min.css">
     <link rel="stylesheet" href="/noa-assets/assets/libs/datatables/buttons/2.2.3/css/buttons.bootstrap5.min.css">
-    {{-- Flatpicker --}}
-    <link rel="stylesheet" href="/noa-assets/assets/libs/flatpickr/flatpickr.min.css">
     <!-- Sweetalerts CSS -->
     <link rel="stylesheet" href="/noa-assets/assets/libs/sweetalert2/sweetalert2.min.css">
 
@@ -95,8 +92,6 @@
     <script src="/noa-assets/assets/js/datatables.js"></script>
     {{-- Sweetalert --}}
     <script src="/noa-assets/assets/libs/sweetalert2/sweetalert2.min.js"></script>
-    {{-- Flatpicker --}}
-    <script src="{{ asset('noa-assets/assets/libs/flatpickr/dist/flatpickr.min.js') }}"></script>
 
     <script>
         function reloadDatatable() {
@@ -109,6 +104,8 @@
                 serverSide: true,
                 searchDelay: 1500,
                 searching: false,
+                pagination: false,
+                ordering: false,
                 ajax: {
                     url: '{{ url()->current() }}',
                     datatype: "json",
@@ -116,11 +113,6 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    data: function(d) {
-                        d.filter_start_date = $("input[name='filter_start_date']").val();
-                        d.filter_end_date = $("input[name='filter_end_date']").val();
-                        d.filter_no_inv = $("input[name='filter_no_inv']").val();
-                    }
                 },
                 drawCallback: function(data) {
                     let json = data.json
@@ -138,86 +130,71 @@
                         searchable: false
                     },
                     {
-                        data: 'created_at',
-                        name: 'created_at'
+                        data: 'product.name',
+                        name: 'product.name',
+                        render: function(data, type, row, meta) {
+                            return ` <div class="text-wrap" style="max-width: 100%;">${data}</div>`
+                        }
                     },
                     {
-                        data: 'number_invoice',
-                        name: 'number_invoice'
+                        data: 'qty',
+                        name: 'qty',
+                        render: function(data, type, row, meta) {
+                            return ` <div class="text-wrap" style="max-width: 100%;">${data}</div>`
+                        }
                     },
                     {
-                        data: 'total_sales',
-                        name: 'total_sales'
+                        data: 'price',
+                        name: 'price',
+                        render: function(data, type, row, meta) {
+                            return ` <div class="text-wrap" style="max-width: 100%;">${data}</div>`
+                        }
                     },
                     {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false,
-                        searchable: false
+                        data: 'total_price',
+                        name: 'total_price',
+                        render: function(data, type, row, meta) {
+                            return ` <div class="text-wrap" style="max-width: 100%;">${formatRupiah(data)}</div>`
+                        },
                     },
-                ]
+                ],
+                footerCallback: function(row, data, start, end, display) {
+                    var api = this.api();
+
+                    // Remove the formatting to get integer data for summation
+                    var intVal = function(i) {
+                        return typeof i === 'string' ?
+                            i.replace(/[\$,]/g, '') * 1 :
+                            typeof i === 'number' ?
+                            i :
+                            0;
+                    };
+
+                    // Total over all pages
+                    total = api
+                        .column(4)
+                        .data()
+                        .reduce(function(a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+
+                    // Update footer
+                    $(api.column(4).footer()).html(`Total ${formatRupiah(total)}`);
+                }
             });
+        }
+
+        function formatRupiah(num) {
+            return new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+                minimumFractionDigits: 0
+            }).format(num);
         }
 
         $(document).ready(function() {
             createDatatable();
         });
-
-        $(document).on("click", ".btn-delete", function() {
-            let id = $(this).data("id")
-            let name = $(this).data("name")
-            Swal.fire({
-                title: "Peringatan",
-                text: `Apakah anda yakin ingin menghapus produk ${name}?`,
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Iya,hapus",
-                cancelButtonText: "Batal"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $(`.form-delete-${id}`).submit();
-                }
-            });
-        })
-
-        $("input[name='filter_no_inv']").on("keypress", function(e) {
-            if (e.which == 13) {
-                reloadDatatable()
-            }
-        })
-
-        const fp_daterange = flatpickr("#filter_date_range", {
-            mode: "range",
-            altInput: true,
-            dateFormat: "Y-m-d",
-            altFormat: "d M Y",
-            onChange: function(selectedDates, dateStr, instance) {
-                // Ambil nilai dari altInput
-                let altInputValue = instance.altInput.value;
-                // Ganti " to " dengan " - "
-                let formattedValue = altInputValue.replace(" to ", " - ");
-                // Set nilai baru ke altInput
-                instance.altInput.value = formattedValue;
-
-                let startDate = new Date(selectedDates[0]);
-                let endDate = new Date(selectedDates[1]);
-
-                // Format tanggal untuk perbandingan
-                let startDateFormat = startDate.getFullYear() + '-' + (startDate.getMonth() + 1) + '-' +
-                    startDate.getDate();
-                let endDateFormat = endDate.getFullYear() + '-' + (endDate.getMonth() + 1) + '-' + endDate
-                    .getDate();
-
-                $("input[name='filter_start_date']").val(startDateFormat)
-                $("input[name='filter_end_date']").val(endDateFormat)
-
-                if (selectedDates.length == 2 || startDateFormat == endDateFormat) {
-                    reloadDatatable()
-                }
-            }
-        })
     </script>
 @endpush
 
