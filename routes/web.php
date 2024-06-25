@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CashierController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ReportSalesController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\UnitController;
@@ -15,10 +16,12 @@ Route::middleware("guest")->group(function () {
 });
 
 Route::middleware("auth")->group(function () {
+    //product
     Route::resource("product-category", ProductCategoryController::class)->except("show");
     Route::resource("unit", UnitController::class)->except("show");
     Route::resource("product", ProductController::class)->except("show");
 
+    // stock
     Route::prefix('stock')->group(function () {
         Route::get("/", [StockController::class, 'index']);
         Route::get("create", [StockController::class, 'create']);
@@ -28,11 +31,20 @@ Route::middleware("auth")->group(function () {
         Route::get("{product_id}/history", [StockController::class, 'history']);
     });
 
+    //cashier
     Route::get("cashier", [CashierController::class, 'index']);
     Route::post("cashier/product", [CashierController::class, '__ajax__getProduct']);
     Route::post("cashier/pay", [CashierController::class, 'pay']);
-
     Route::get("sales/{sale_id}/print", [SalesController::class, 'print']);
+
+    //report
+    Route::prefix("report")->group(function () {
+        Route::get("sales", [ReportSalesController::class, 'index']);
+    });
+
+
+    // Logout
+    Route::get("logout", [AuthController::class, 'logout']);
 
     // Ajax Request
     Route::get("products/get", [ProductController::class, '_ajax_getProducts']);

@@ -37,4 +37,14 @@ class AuthController extends Controller
             ->with("error", "Gagal")
             ->with("error_message", "Username/Password salah");
     }
+
+    public function logout()
+    {
+        Auth::logout();
+
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+
+        return redirect('/');
+    }
 }
