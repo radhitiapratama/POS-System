@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId("product_id")->constrained("products", "id");
             $table->integer("qty");
             $table->integer("price");
+            $table->boolean("is_return")->default(false);
             $table->timestamps();
             $table->softDeletes();
         });
