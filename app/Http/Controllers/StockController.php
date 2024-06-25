@@ -295,11 +295,6 @@ class StockController extends Controller
                 $date_range_end = $date_range_end . " 23:59:59";
             }
 
-            // return response()->json([
-            //     'a' => $date_range_start,
-            //     'b' => $date_range_end
-            // ]);
-
             if ($filter_month != null) {
                 $start_date = date("Y-m-01 00:00:00", strtotime($filter_month));
                 $end_date = date("Y-m-t 23:59:59", strtotime($filter_month));
@@ -327,8 +322,10 @@ class StockController extends Controller
                         return '<span class="badge bg-info p-2">Penambahan Stok</span>';
                     } elseif ($model->type == "additional-adjustment") {
                         return '<span class="badge bg-primary p-2">Penyesuaian Penambahan</span>';
+                    } elseif ($model->type == "reduction-adjustment") {
+                        return '<span class="badge bg-warning p-2">Penyesuaian Pengurangan</span>';
                     } else {
-                        return '<span class="badge bg-danger p-2">Penyesuaian Pengurangan</span>';
+                        return '<span class="badge bg-danger p-2">Penjualan</span>';
                     }
                 })
                 ->addColumn("created_at_formatted", function ($model) {

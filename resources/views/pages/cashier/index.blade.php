@@ -15,7 +15,7 @@
             <div class="card custom-card" id="cart-container-delete">
                 <div class="card-header">
                     <label for="scan-barcode" class="form-label">Scan di sini</label>
-                    <input type="email" class="form-control" id="scan-barcode">
+                    <input type="text" class="form-control" id="scan-barcode" tabindex="1">
                     <div id="emailHelp" class="form-text">Cari berdasarkan Barcode/Nama Produk</div>
                 </div>
                 <div class="card-body">
@@ -66,7 +66,7 @@
                         <div class="input-group flex-nowrap">
                             <span class="input-group-text" id="addon-wrapping">Rp</span>
                             <input type="text" class="form-control total-sales" aria-describedby="addon-wrapping"
-                                readonly value="0">
+                                readonly value="0" tabindex="-1">
                         </div>
                     </div>
                     <div class="mb-3">
@@ -74,7 +74,7 @@
                         <div class="input-group flex-nowrap">
                             <span class="input-group-text" id="addon-wrapping">Rp</span>
                             <input type="text" class="form-control return-price" aria-describedby="addon-wrapping"
-                                readonly value="0">
+                                readonly value="0" tabindex="-1">
                         </div>
                     </div>
                     <div class="mb-3">
@@ -82,7 +82,7 @@
                         <div class="input-group flex-nowrap">
                             <span class="input-group-text" id="addon-wrapping">Rp</span>
                             <input type="text" class="form-control" aria-describedby="addon-wrapping" name="pay"
-                                value="0">
+                                value="0" tabindex="2">
                         </div>
                     </div>
                 </div>
@@ -134,6 +134,8 @@
             unformatOnSubmit: true // Ensure the unformatted value is submitted
         }
 
+        const base_url = "{{ url('') }}/"
+
         new AutoNumeric("input[name='pay']", autoNumericOptions)
 
         $(document).ready(function() {
@@ -145,94 +147,112 @@
         $(document).on("keypress", "#scan-barcode", function(e) {
             if (e.which == 13) {
                 let product = $(this).val()
-                $.ajax({
-                    type: "POST",
-                    url: "{{ url('cashier/product') }}",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: {
-                        product,
-                        cart: JSON.parse(localStorage.getItem("cart"))
-                    },
-                    dataType: "json",
-                    success: function(response) {
-                        $("#scan-barcode").val("")
-
-                        if (response.data == [] || response.data == null) {
-                            Swal.fire({
-                                title: "Produk tidak ditemukan!",
-                                text: "Silahkan cek kembali Barcode/Nama Produk...",
-                                icon: "error",
-                                confirmButtonColor: "#3085d6",
-                                confirmButtonText: "Ok",
-                            });
-
-                            return;
-                        }
-
-                        if (response.data.stock == null) {
-                            Swal.fire({
-                                title: "Stok produk kosong!",
-                                text: "Silahkan tambahkan stok produk terlebih dahulu",
-                                icon: "error",
-                                confirmButtonColor: "#3085d6",
-                                confirmButtonText: "Ok",
-                            });
-
-                            return
-                        }
-
-                        let data = response.data;
-                        let storage_cart = [];
-
-                        if (localStorage.getItem("cart") != null) {
-                            storage_cart = JSON.parse(localStorage.getItem("cart"))
-                        }
-
-                        let cart
-                        let product_index_in_storage = storage_cart.findIndex(e => e.id == data.id)
-                        console.log(storage_cart);
-                        console.log(product_index_in_storage);
-
-                        if (product_index_in_storage <= -1) {
-                            cart = {
-                                id: data.id,
-                                name: data.name,
-                                qty: 1,
-                                selling_price: data.selling_price,
-                                remaining_stock: data.stock.stock,
-                            };
-
-                            localStorage.setItem("cart", JSON.stringify([...storage_cart, cart]))
-                        } else {
-                            let product_update = storage_cart.find(e => e.id == data.id)
-                            let product_qty = product_update.qty
-                            product_qty = product_qty + 1
-
-                            // cek apakah qty product masih ada atau tidak
-                            if (product_qty > data.stock.stock) {
+                $("#scan-barcode").val("")
+                setTimeout(() => {
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ url('cashier/product') }}",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            product,
+                            cart: JSON.parse(localStorage.getItem("cart"))
+                        },
+                        dataType: "json",
+                        success: function(response) {
+                            $("#scan-barcode").val("")
+                            console.log(response);
+                            if (response.data == [] || response.data == null) {
                                 Swal.fire({
-                                    title: "Produk habis!",
+                                    title: "Produk tidak ditemukan!",
+                                    text: "Silahkan cek kembali Barcode/Nama Produk...",
                                     icon: "error",
                                     confirmButtonColor: "#3085d6",
                                     confirmButtonText: "Ok",
                                 });
 
-                                storage_cart[product_index_in_storage].qty = data.stock.stock
-                                localStorage.setItem("cart", JSON.stringify(storage_cart))
                                 return;
                             }
 
-                            storage_cart[product_index_in_storage].qty++
-                            localStorage.setItem("cart", JSON.stringify(storage_cart))
+                            if (response.data.stock == null) {
+                                Swal.fire({
+                                    title: "Stok produk kosong!",
+                                    text: "Silahkan tambahkan stok produk terlebih dahulu",
+                                    icon: "error",
+                                    confirmButtonColor: "#3085d6",
+                                    confirmButtonText: "Ok",
+                                });
+
+                                return
+                            }
+
+                            let data = response.data;
+                            let storage_cart = [];
+
+                            if (localStorage.getItem("cart") != null) {
+                                storage_cart = JSON.parse(localStorage.getItem("cart"))
+                            }
+
+                            let cart
+                            let product_index_in_storage = storage_cart.findIndex(e => e.id ==
+                                data.id)
+                            console.log(storage_cart);
+                            console.log(product_index_in_storage);
+
+                            if (product_index_in_storage <= -1) {
+                                if (data.stock.stock <= 0) {
+                                    Swal.fire({
+                                        title: "Produk habis!",
+                                        icon: "error",
+                                        confirmButtonColor: "#3085d6",
+                                        confirmButtonText: "Ok",
+                                    });
+
+                                    return;
+                                }
+
+                                cart = {
+                                    id: data.id,
+                                    name: data.name,
+                                    qty: 1,
+                                    selling_price: data.selling_price,
+                                    remaining_stock: data.stock.stock,
+                                };
+
+                                localStorage.setItem("cart", JSON.stringify([...storage_cart,
+                                    cart
+                                ]))
+                            } else {
+                                let product_update = storage_cart.find(e => e.id == data.id)
+                                let product_qty = product_update.qty
+                                product_qty = product_qty + 1
+
+                                // cek apakah qty product masih ada atau tidak
+                                if (product_qty > data.stock.stock) {
+                                    Swal.fire({
+                                        title: "Produk habis!",
+                                        icon: "error",
+                                        confirmButtonColor: "#3085d6",
+                                        confirmButtonText: "Ok",
+                                    });
+
+                                    storage_cart[product_index_in_storage].qty = data.stock
+                                        .stock
+                                    localStorage.setItem("cart", JSON.stringify(storage_cart))
+                                    return;
+                                }
+
+                                storage_cart[product_index_in_storage].qty++
+                                localStorage.setItem("cart", JSON.stringify(storage_cart))
+                            }
+                            loadCart()
+                            calcTotalSales()
+                            calcReturn()
+                            console.log(JSON.parse(localStorage.getItem("cart")));
                         }
-                        loadCart()
-                        calcTotalSales()
-                        calcReturn()
-                        console.log(JSON.parse(localStorage.getItem("cart")));
-                    }
-                });
+                    });
+                }, 200);
             }
         })
 
@@ -355,7 +375,7 @@
                     total_price += storage_cart[i].qty * storage_cart[i].selling_price
                 }
 
-                $(".total-sales").val(formatRupiah(total_price))
+                $(".total-sales").val(formatRupiah(total_price).replaceAll("Rp", ""))
                 $("input[name='total_sales_hide']").val(total_price)
                 return
             }
@@ -427,8 +447,70 @@
         })
 
         $(document).on("keyup", "input[name='pay']", function(e) {
-            let value = e.target.value
-            calcReturn(value.replaceAll(".", ""))
+            // let value = e.target.value
+            calcReturn(e.target.value.replaceAll(".", ""))
+        })
+
+        $("input[name='pay']").on("keypress", function(e) {
+            if (e.which == 13) {
+                let pay = $("input[name='pay']").val()
+                Swal.fire({
+                    title: "Peringatan!",
+                    text: "Apakah anda yakin ingin menyelesaikan transaksi ini?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Iya,Selesaikan",
+                    cancelButtonText: "Batal",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "POST",
+                            url: "{{ url('cashier/pay') }}",
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            data: {
+                                cart: JSON.parse(localStorage.getItem("cart")),
+                                pay: pay.replaceAll(".", "")
+                            },
+                            dataType: "json",
+                            success: function(response) {
+                                console.log(response);
+                                if (response.status == "error") {
+                                    Swal.fire({
+                                        title: response.title,
+                                        text: response.message,
+                                        icon: "error",
+                                        confirmButtonColor: "#3085d6",
+                                        confirmButtonText: "Ok",
+                                    });
+
+                                    return
+                                }
+
+                                Swal.fire({
+                                    title: response.title,
+                                    text: response.message,
+                                    icon: "success",
+                                    confirmButtonColor: "#3085d6",
+                                    confirmButtonText: "Ok",
+                                });
+
+                                localStorage.setItem("cart", JSON.stringify(response.cart))
+                                $("input[name='pay']").val("0")
+                                loadCart()
+                                calcTotalSales()
+                                calcReturn()
+
+                                let sales_id = response.sales_id
+                                window.open(base_url + `sales/${sales_id}/print`, "_blank")
+                            }
+                        });
+                    }
+                });
+            }
         })
     </script>
 @endpush

@@ -3,6 +3,7 @@
 use App\Http\Controllers\CashierController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SalesController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\UnitController;
 use Illuminate\Routing\RouteAction;
@@ -29,7 +30,9 @@ Route::prefix('stock')->group(function () {
 
 Route::get("cashier", [CashierController::class, 'index']);
 Route::post("cashier/product", [CashierController::class, '__ajax__getProduct']);
+Route::post("cashier/pay", [CashierController::class, 'pay']);
 
+Route::get("sales/{sale_id}/print", [SalesController::class, 'print']);
 
 // Ajax Request
 Route::get("products/get", [ProductController::class, '_ajax_getProducts']);
