@@ -68,6 +68,7 @@ class ProductController extends Controller
                 })
                 ->toJson();
         }
+
         return view("pages.product.index");
     }
 

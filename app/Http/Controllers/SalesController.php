@@ -13,6 +13,72 @@ use Yajra\DataTables\Facades\DataTables;
 
 class SalesController extends Controller
 {
+    public function index(Request $request)
+    {
+        if ($request->ajax()) {
+            $filter_start_date = null;
+            $filter_end_date = null;
+            $filter_no_inv = $request->filter_no_inv;
+            $filter_product = $request->filter_product;
+
+            if ($request->filter_start_date != null && $request->filter_end_date != null) {
+                $filter_start_date = date("Y-m-d 00:00:00", strtotime($request->filter_start_date));
+                $filter_end_date = date("Y-m-d 23:59:59", strtotime($request->filter_end_date));
+            }
+
+            $model  = SaleReturn::query()
+                ->select("*", DB::raw("(qty * price) as total_return"))
+                ->with(['sale_details' => function ($q) {
+                    $q->join("products", 'products.id', '=', 'sale_details.product_id')
+                        ->join("sales", "sales.id", '=', 'sale_details.sales_id')
+                        ->select("sale_details.*", "products.name", "sales.number_invoice");
+                }]);
+
+            $index = 0;
+
+            return DataTables::eloquent($model)
+                ->addIndexColumn()
+                ->filter(function ($query) use ($filter_start_date, $filter_end_date, $filter_product, $filter_no_inv) {
+                    if ($filter_start_date != null && $filter_end_date != null) {
+                        $query->where("created_at", ">=", $filter_start_date)
+                            ->where("created_at", "<=", $filter_end_date);
+                    }
+
+                    if ($filter_product != null) {
+                        $query->whereHas("sale_details", function ($q) use ($filter_product) {
+                            $q->where("product_id", $filter_product);
+                        });
+                    }
+
+                    if ($filter_no_inv != null) {
+                        $query->whereHas("sale_details", function ($q) use ($filter_no_inv) {
+                            $q->join("sales", "sales.id", '=', 'sale_details.id')
+                                ->where("sales.number_invoice", $filter_no_inv);
+                        });
+                    }
+                })
+                ->editColumn("created_at", function ($model) {
+                    return Carbon::parse($model->created_at)->format("d-m-Y H:i:s");
+                })
+                ->addColumn('action', function ($model) use (&$index) {
+                    $index++;
+                    $action_el = '
+                    <div class="hstack gap-2 fs-15 d-flex justify-content-center align-items-center">
+                        <a href="' . url("sales/return/$model->id/show") . '"
+                        class="btn btn-icon btn-sm btn-info">
+                            <i class="ri-eye-line"></i>
+                        </a>
+                    </div>
+                    ';
+
+                    return $action_el;
+                })
+                ->toJson();
+        }
+
+        return view("pages.sales.return.index");
+    }
+
     public function print(int $sales_id)
     {
         $sales = Sales::where("id", $sales_id)->first();
@@ -91,5 +157,20 @@ class SalesController extends Controller
                 'error_message' => $e->getMessage(),
             ]);
         }
+    }
+
+    public function show($sale_return_id)
+    {
+        $sale_return = SaleReturn::with([
+            'sale_details' => function ($q) {
+                $q->with('product', 'sales');
+            }
+        ])
+            ->where("id", $sale_return_id)
+            ->first();
+
+        return view("pages.sales.return.show", [
+            'sale_return' => $sale_return,
+        ]);
     }
 }

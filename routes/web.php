@@ -44,12 +44,12 @@ Route::middleware("auth")->group(function () {
     Route::post("cashier/pay", [CashierController::class, 'pay']);
 
     //sales
-
     Route::prefix("sales")->group(function () {
         Route::get("{sale_id}/print", [SalesController::class, 'print']);
         Route::match(['get', 'post'], "{sales_id}/return", [SalesController::class, 'returnSales']);
         Route::post("return/confirm", [SalesController::class, 'handleReturn']);
         Route::match(['get', 'post'], 'return', [SalesController::class, 'index']);
+        Route::get("return/{sales_return_id}/show", [SalesController::class, 'show']);
     });
 
 
