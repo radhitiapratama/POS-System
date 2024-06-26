@@ -58,6 +58,10 @@ class ReportSalesController extends Controller
                             class="btn btn-icon btn-sm btn-info">
                             <i class="ri-history-line"></i>
                         </a>
+                        <a href="' . url("sales/$model->id/return") . '"
+                            class="btn btn-icon btn-sm btn-danger">
+                            <i class="ri-text-wrap"></i>
+                        </a>
                     </div>
                     ';
 
@@ -91,19 +95,6 @@ class ReportSalesController extends Controller
                 })
                 ->editColumn("total_price", function ($model) {
                     return ($model->price * $model->qty);
-                })
-                ->addColumn('action', function ($model) use (&$index) {
-                    $index++;
-                    $action_el = '
-                    <div class="hstack gap-2 fs-15 d-flex justify-content-center">
-                        <a href="' . url("report/sales/$model->id") . '"
-                            class="btn btn-icon btn-sm btn-info">
-                            <i class="ri-history-line"></i>
-                        </a>
-                    </div>
-                    ';
-
-                    return $action_el;
                 })
                 ->toJson();
         }

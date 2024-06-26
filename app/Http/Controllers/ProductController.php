@@ -334,25 +334,23 @@ class ProductController extends Controller
             //     'b' => $month_end
             // ]);
 
-
             $model = SaleDetails::with(['product'])
-                ->whereHas("product", function ($q) {
-                    $q->whereNull("deleted_at");
+                ->whereHas('product', function ($q) {
+                    $q->whereNull('deleted_at');
                 })
                 ->addSelect([
-                    'qty_sold' => DB::table("sale_details")
-                        ->selectRaw("sum(qty)")
-                        ->where("created_at", ">=", $month_start)
-                        ->where("created_at", "<=", $month_end)
-                        ->groupBy("product_id"),
-                    'total_sold' => DB::table("sale_details")
-                        ->selectRaw('SUM(qty * price)')
-                        ->where("created_at", ">=", $month_start)
-                        ->where("created_at", "<=", $month_end)
-                        ->groupBy("product_id"),
+                    'sale_details.*',
+                    DB::raw('(SELECT SUM(qty) FROM sale_details as sd 
+                          WHERE sd.product_id = sale_details.product_id 
+                          AND sd.created_at >= "' . $month_start . '" 
+                          AND sd.created_at <= "' . $month_end . '") as qty_sold'),
+                    DB::raw('(SELECT SUM(qty * price) FROM sale_details as sd 
+                          WHERE sd.product_id = sale_details.product_id 
+                          AND sd.created_at >= "' . $month_start . '" 
+                          AND sd.created_at <= "' . $month_end . '") as total_sold')
                 ])
-                ->having("qty_sold", ">", 0)
-                ->having("total_sold", ">", 0);
+                ->havingRaw('qty_sold > 0')
+                ->havingRaw('total_sold > 0');
 
             return DataTables::eloquent($model)
                 ->addIndexColumn()
