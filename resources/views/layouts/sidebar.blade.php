@@ -96,21 +96,21 @@
                                         </ul>
                                     </li>
                                     <li class="slide">
-                                        <a href="landing.html" target="_blank" class="side-menu__item">
+                                        <a href="landing.html" class="side-menu__item">
                                             <i class="ri-text-wrap side-menu__icon custom-sidebar-icon"></i>
                                             <span class="side-menu__label">Retur Penjualan
                                             </span>
                                         </a>
                                     </li>
                                     <li class="slide">
-                                        <a href="landing.html" target="_blank" class="side-menu__item">
+                                        <a href="{{ url('product/best-selling') }}" class="side-menu__item">
                                             <i class="ri-line-chart-line side-menu__icon custom-sidebar-icon"></i>
                                             <span class="side-menu__label">Produk Terlaris
                                             </span>
                                         </a>
                                     </li>
                                     <li class="slide">
-                                        <a href="landing.html" target="_blank" class="side-menu__item">
+                                        <a href="{{ url('product/litte-stock') }}" class="side-menu__item">
                                             <i class="ri-alarm-warning-line side-menu__icon custom-sidebar-icon"></i>
                                             <span class="side-menu__label">Produk Akan Habis
                                             </span>

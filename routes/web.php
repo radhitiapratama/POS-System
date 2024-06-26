@@ -16,10 +16,17 @@ Route::middleware("guest")->group(function () {
 });
 
 Route::middleware("auth")->group(function () {
-    //product
+    //resource
     Route::resource("product-category", ProductCategoryController::class)->except("show");
     Route::resource("unit", UnitController::class)->except("show");
     Route::resource("product", ProductController::class)->except("show");
+
+    // product
+    Route::prefix("product")->group(function () {
+        Route::match(['get', 'post'], 'litte-stock', [ProductController::class, 'littleStock']);
+        Route::match(['get', 'post'], "best-selling", [ProductController::class, 'bestSelling']);
+    });
+
 
     // stock
     Route::prefix('stock')->group(function () {
@@ -50,4 +57,5 @@ Route::middleware("auth")->group(function () {
     // Ajax Request
     Route::get("products/get", [ProductController::class, '_ajax_getProducts']);
     Route::post("product/get-stock", [ProductController::class, '__ajax__getProductStock']);
+    Route::match(['get', 'post'], "product-category/search", [ProductCategoryController::class, '__ajax__searchProduct']);
 });

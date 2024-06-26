@@ -187,4 +187,12 @@ class ProductCategoryController extends Controller
                 ->with("error_message", "Terjadi kesalahan saat menghapus kategori " . $request->name . " silahkan coba lagi");
         }
     }
+
+    public function __ajax__searchProduct(Request $request)
+    {
+        $category = ProductCategory::where("name", 'LIKE', '%' . $request->q . "%")
+            ->get();
+
+        return response()->json($category);
+    }
 }

@@ -21,4 +21,8 @@ class SalesController extends Controller
             'sales' => $sales,
         ]);
     }
+
+    public function salesReturn(Request $request)
+    {
+    }
 }

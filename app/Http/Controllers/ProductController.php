@@ -6,10 +6,12 @@ use App\Models\Unit;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\ProductCategory;
+use App\Models\SaleDetails;
 use App\Models\Stock;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\CssSelector\Node\FunctionNode;
 
 class ProductController extends Controller
 {
@@ -275,5 +277,88 @@ class ProductController extends Controller
             ->first();
 
         return response()->json(['data' => $stock]);
+    }
+
+    public function littleStock(Request $request)
+    {
+        if ($request->ajax()) {
+            $filter_category = $request->filter_category;
+
+            $model = Product::query()
+                ->with([
+                    'category',
+                    'stock'
+                ])
+                ->whereHas("category", function ($query) {
+                    $query->where("deleted_at", null);
+                })
+                ->where("stock_limit", ">", function ($q) {
+                    $q->from("stocks")
+                        ->select("stock")
+                        ->whereColumn("product_id", "products.id")
+                        ->orderBy("created_at", "DESC");
+                });
+
+            return DataTables::eloquent($model)
+                ->addIndexColumn()
+                ->filter(function ($q) use ($filter_category) {
+                    if ($filter_category != null) {
+                        $q->where("category_id", $filter_category);
+                    }
+                })
+                ->editColumn("stock.stock", function ($model) {
+                    return number_format($model->stock->stock, 0, ',', '.');
+                })
+                ->editColumn("stock_limit", function ($model) {
+                    return number_format($model->stock_limit, 0, ',', '.');
+                })
+                ->toJson();
+        }
+
+        return view("pages.product.little-stock.index");
+    }
+
+    public function bestSelling(Request $request)
+    {
+        if ($request->ajax()) {
+            $month_start = date("Y-m-01 00:00:00");
+            $month_end = date("Y-m-t 23:59:59");
+
+            if ($request->filter_month) {
+                $month_start = date("Y-m-01 00:00:00", strtotime($request->filter_month));
+                $month_end = date("Y-m-t 23:59:59", strtotime($request->filter_month));
+            }
+
+            // return response()->json([
+            //     'a' => $month_start,
+            //     'b' => $month_end
+            // ]);
+
+
+            $model = SaleDetails::with(['product'])
+                ->whereHas("product", function ($q) {
+                    $q->whereNull("deleted_at");
+                })
+                ->addSelect([
+                    'qty_sold' => DB::table("sale_details")
+                        ->selectRaw("sum(qty)")
+                        ->where("created_at", ">=", $month_start)
+                        ->where("created_at", "<=", $month_end)
+                        ->groupBy("product_id"),
+                    'total_sold' => DB::table("sale_details")
+                        ->selectRaw('SUM(qty * price)')
+                        ->where("created_at", ">=", $month_start)
+                        ->where("created_at", "<=", $month_end)
+                        ->groupBy("product_id"),
+                ])
+                ->having("qty_sold", ">", 0)
+                ->having("total_sold", ">", 0);
+
+            return DataTables::eloquent($model)
+                ->addIndexColumn()
+                ->toJson();
+        }
+
+        return view("pages.product.best-selling.index");
     }
 }
