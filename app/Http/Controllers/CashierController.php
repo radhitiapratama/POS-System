@@ -99,6 +99,7 @@ class CashierController extends Controller
             $sales_id = 1;
             if ($get_last_id_sales != null) {
                 $sales_id =  $get_last_id_sales->id++;
+                $sales_id++;
             }
 
             for ($i = 0; $i < count($cart); $i++) {

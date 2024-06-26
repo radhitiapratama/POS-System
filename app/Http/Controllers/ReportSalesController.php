@@ -28,7 +28,7 @@ class ReportSalesController extends Controller
                 ->with("sale_details")
                 ->addSelect([
                     'total_sales' => SaleDetails::select(DB::raw("SUM(qty * price)"))
-                        ->whereColumn("sales.id", 'sale_details.id')
+                        ->whereColumn("sales.id", 'sale_details.sales_id')
                 ]);
 
 
@@ -54,6 +54,10 @@ class ReportSalesController extends Controller
                     $index++;
                     $action_el = '
                     <div class="hstack gap-2 fs-15 d-flex justify-content-center">
+                        <a href="' . url("/sales/$model->id/print") . '"
+                            class="btn btn-icon btn-sm btn-primary" target="_blank">
+                            <i class="ri-printer-line"></i>
+                        </a>
                         <a href="' . url("report/sales/$model->id") . '"
                             class="btn btn-icon btn-sm btn-info">
                             <i class="ri-history-line"></i>
