@@ -127,3 +127,7 @@
     /* Edge 12 -18 */
     color: rgba(0, 0, 0, .4) !important;
 }
+
+.form-control:disabled {
+    color: #000 !important;
+}

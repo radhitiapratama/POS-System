@@ -42,7 +42,16 @@ Route::middleware("auth")->group(function () {
     Route::get("cashier", [CashierController::class, 'index']);
     Route::post("cashier/product", [CashierController::class, '__ajax__getProduct']);
     Route::post("cashier/pay", [CashierController::class, 'pay']);
-    Route::get("sales/{sale_id}/print", [SalesController::class, 'print']);
+
+    //sales
+
+    Route::prefix("sales")->group(function () {
+        Route::get("{sale_id}/print", [SalesController::class, 'print']);
+        Route::match(['get', 'post'], "{sales_id}/return", [SalesController::class, 'returnSales']);
+        Route::post("return/confirm", [SalesController::class, 'handleReturn']);
+        Route::match(['get', 'post'], 'return', [SalesController::class, 'index']);
+    });
+
 
     //report
     Route::prefix("report")->group(function () {

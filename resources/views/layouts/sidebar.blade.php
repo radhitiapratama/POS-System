@@ -96,7 +96,7 @@
                                         </ul>
                                     </li>
                                     <li class="slide">
-                                        <a href="landing.html" class="side-menu__item">
+                                        <a href="{{ url('sales/return') }}" class="side-menu__item">
                                             <i class="ri-text-wrap side-menu__icon custom-sidebar-icon"></i>
                                             <span class="side-menu__label">Retur Penjualan
                                             </span>
