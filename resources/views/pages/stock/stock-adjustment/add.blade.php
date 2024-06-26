@@ -38,8 +38,8 @@
                 <div class="mb-3">
                     <label for="current_product_stock_temp" class="form-label fs-14 text-dark">Stock produk saat ini</label>
                     <input type="text" class="form-control" id="current_product_stock_temp"
-                        name="current_product_stock_temp" placeholder="" value="{{ old('current_product_stock_temp', '-') }}"
-                        maxlength="255" disabled>
+                        name="current_product_stock_temp" placeholder=""
+                        value="{{ old('current_product_stock_temp', '-') }}" maxlength="255" disabled>
                     @error('current_product_stock_temp')
                         <div class="text-danger mt-2" id="current_product_stock_temp">
                             {{ $message }}
@@ -95,9 +95,12 @@
             placeholder: "Pilih...",
             ajax: {
                 delay: 1000,
-                url: "{{ url('products/get') }}",
-                type: "GET",
+                url: "{{ url('products/search') }}",
+                type: "POST",
                 dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 processResults: function(data) {
                     console.log(data);
                     return {

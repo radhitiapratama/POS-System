@@ -69,9 +69,12 @@
             placeholder: "Pilih...",
             ajax: {
                 delay: 1000,
-                url: "{{ url('products/get') }}",
-                type: "GET",
+                url: "{{ url('products/search') }}",
+                type: "POST",
                 dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 processResults: function(data) {
                     console.log(data);
                     return {

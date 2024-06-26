@@ -69,30 +69,30 @@
 
 @push('scripts')
     {{-- DataTable --}}
-    <link rel="stylesheet" href="noa-assets/assets/libs/datatables/1.12.1/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="noa-assets/assets/libs/datatables/responsive/2.3.0/css/responsive.bootstrap.min.css">
-    <link rel="stylesheet" href="noa-assets/assets/libs/datatables/buttons/2.2.3/css/buttons.bootstrap5.min.css">
+    <link rel="stylesheet" href="/noa-assets/assets/libs/datatables/1.12.1/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="/noa-assets/assets/libs/datatables/responsive/2.3.0/css/responsive.bootstrap.min.css">
+    <link rel="stylesheet" href="/noa-assets/assets/libs/datatables/buttons/2.2.3/css/buttons.bootstrap5.min.css">
 
     <!-- Sweetalerts CSS -->
-    <link rel="stylesheet" href="noa-assets/assets/libs/sweetalert2/sweetalert2.min.css">
+    <link rel="stylesheet" href="/noa-assets/assets/libs/sweetalert2/sweetalert2.min.css">
 
     {{-- Datatable --}}
-    <script src="noa-assets/assets/libs/datatables/1.12.1/js/jquery.dataTables.min.js"></script>
-    <script src="noa-assets/assets/libs/datatables/1.12.1/js/dataTables.bootstrap5.min.js"></script>
-    <script src="noa-assets/assets/libs/datatables/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
-    <script src="noa-assets/assets/libs/datatables/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
-    <script src="noa-assets/assets/libs/datatables/buttons/2.2.3/js/buttons.print.min.js"></script>
-    <script src="noa-assets/assets/libs/ajax/libs/pdfmake/0.2.6/pdfmake.min.js"></script>
-    <script src="noa-assets/assets/libs/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script src="noa-assets/assets/libs/datatables/buttons/2.2.3/js/buttons.html5.min.js"></script>
-    <script src="noa-assets/assets/libs/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="noa-assets/assets/js/datatables.js"></script>
+    <script src="/noa-assets/assets/libs/datatables/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="/noa-assets/assets/libs/datatables/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+    <script src="/noa-assets/assets/libs/datatables/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
+    <script src="/noa-assets/assets/libs/datatables/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+    <script src="/noa-assets/assets/libs/datatables/buttons/2.2.3/js/buttons.print.min.js"></script>
+    <script src="/noa-assets/assets/libs/ajax/libs/pdfmake/0.2.6/pdfmake.min.js"></script>
+    <script src="/noa-assets/assets/libs/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="/noa-assets/assets/libs/datatables/buttons/2.2.3/js/buttons.html5.min.js"></script>
+    <script src="/noa-assets/assets/libs/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="/noa-assets/assets/js/datatables.js"></script>
 
 
 
 
     {{-- Sweetalert --}}
-    <script src="noa-assets/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+    <script src="/noa-assets/assets/libs/sweetalert2/sweetalert2.min.js"></script>
 
     <script>
         // $("#table-product-category").DataTable();

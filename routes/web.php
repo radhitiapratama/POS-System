@@ -64,7 +64,7 @@ Route::middleware("auth")->group(function () {
     Route::get("logout", [AuthController::class, 'logout']);
 
     // Ajax Request
-    Route::get("products/get", [ProductController::class, '_ajax_getProducts']);
+    Route::match(['get', 'post'], "products/search", [ProductController::class, '_ajax_getProducts']);
     Route::post("product/get-stock", [ProductController::class, '__ajax__getProductStock']);
     Route::match(['get', 'post'], "product-category/search", [ProductCategoryController::class, '__ajax__searchProduct']);
 });
