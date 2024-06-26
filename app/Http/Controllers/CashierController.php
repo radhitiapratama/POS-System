@@ -98,7 +98,7 @@ class CashierController extends Controller
             $get_last_id_sales = Sales::select("id")->latest()->take(1)->first();
             $sales_id = 1;
             if ($get_last_id_sales != null) {
-                $get_last_id_sales->id++;
+                $sales_id =  $get_last_id_sales->id++;
             }
 
             for ($i = 0; $i < count($cart); $i++) {
