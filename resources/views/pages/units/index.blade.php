@@ -6,11 +6,11 @@
             'link' => '#',
         ],
         [
-            'title' => 'Produk',
+            'title' => 'Satuan',
             'link' => '#',
         ],
     ],
-    'last_breadcumb' => 'Produk',
+    'last_breadcumb' => 'Satuan',
     'title' => 'Satuan',
 ])
 @section('content')

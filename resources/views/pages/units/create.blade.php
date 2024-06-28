@@ -6,11 +6,11 @@
             'link' => '#',
         ],
         [
-            'title' => 'Unit',
+            'title' => 'Satuan',
             'link' => '#',
         ],
     ],
-    'last_breadcumb' => 'Unit',
+    'last_breadcumb' => 'Satuan',
     'title' => 'Tambah Satuan',
 ])
 @section('content')
@@ -18,7 +18,7 @@
         <div class="card-header">
             <div class="card-title w-100 d-flex justify-content-between align-items-center">
                 <div class="card-title">Tambah Unit Produk</div>
-                <a href="{{ route('unit.create') }}" class="btn btn-primary label-btn">
+                <a href="{{ route('unit.index') }}" class="btn btn-primary label-btn">
                     <i class="ri-arrow-left-line label-btn-icon"></i>
                     Kembali
                 </a>

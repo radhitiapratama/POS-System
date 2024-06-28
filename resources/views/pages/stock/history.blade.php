@@ -2,7 +2,7 @@
     'page_title' => 'Riwayat Stok Produk',
     'breadcumbs' => [
         [
-            'title' => 'Stok Barang',
+            'title' => 'Stok Produk',
             'link' => '#',
         ],
         [
@@ -21,7 +21,7 @@
     <div class="row">
         <div class="col-12 card custom-card">
             <div class="card-header  w-100 d-flex justify-content-between align-items-center">
-                <div class="card-title">Riwayat Stok Produk</div>
+                <div class="card-title">Riwayat Stok</div>
                 <a href="{{ url('stock') }}" class="btn btn-primary label-btn">
                     <i class="ri-arrow-left-line label-btn-icon"></i>
                     Kembali

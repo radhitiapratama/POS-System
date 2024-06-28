@@ -5,15 +5,19 @@
             'title' => 'Stok Produk',
             'link' => '#',
         ],
+        [
+            'title' => 'Tambah Stok',
+            'link' => '#',
+        ],
     ],
-    'last_breadcumb' => 'Stok Produk',
+    'last_breadcumb' => 'Tambah Stok',
     'title' => 'Tambah stok',
 ])
 @section('content')
     <div class="card custom-card">
         <div class="card-header">
             <div class="card-title w-100 d-flex justify-content-between align-items-center">
-                <div class="card-title">Tambah Stok Produk</div>
+                <div class="card-title">Tambah Stok</div>
                 <a href="{{ url('stock') }}" class="btn btn-primary label-btn">
                     <i class="ri-arrow-left-line label-btn-icon"></i>
                     Kembali

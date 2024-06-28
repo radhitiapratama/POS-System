@@ -6,18 +6,18 @@
             'link' => '#',
         ],
         [
-            'title' => 'Kategori',
+            'title' => 'Produk',
             'link' => '#',
         ],
     ],
-    'last_breadcumb' => 'Kategori',
+    'last_breadcumb' => 'Produk',
     'title' => 'Produk',
 ])
 @section('content')
     <div class="row">
         <div class="col-12 card custom-card">
             <div class="card-header">
-                <div class="card-title">Data Kategori Produk</div>
+                <div class="card-title">Data Produk</div>
             </div>
         </div>
     </div>

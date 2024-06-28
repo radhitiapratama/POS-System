@@ -1,23 +1,19 @@
 @extends('layouts.main', [
-    'page_title' => 'Produk',
+    'page_title' => 'Stok Produk',
     'breadcumbs' => [
         [
-            'title' => 'Master Produk',
-            'link' => '#',
-        ],
-        [
-            'title' => 'Kategori',
+            'title' => 'Stok Produk',
             'link' => '#',
         ],
     ],
-    'last_breadcumb' => 'Kategori',
+    'last_breadcumb' => 'Stok Produk',
     'title' => 'Stok',
 ])
 @section('content')
     <div class="row">
         <div class="col-12 card custom-card">
             <div class="card-header">
-                <div class="card-title">Data Stock Produk</div>
+                <div class="card-title">Data Stock</div>
             </div>
         </div>
     </div>

@@ -5,8 +5,12 @@
             'title' => 'Stok Produk',
             'link' => '#',
         ],
+        [
+            'title' => 'Tambah Stok Penyesuaian',
+            'link' => '#',
+        ],
     ],
-    'last_breadcumb' => 'Stok Produk',
+    'last_breadcumb' => 'Tambah Stok Penyesuaian',
     'title' => 'Penyesuaian stok',
 ])
 @section('content')

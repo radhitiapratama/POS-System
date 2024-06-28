@@ -1,16 +1,16 @@
 @extends('layouts.main', [
-    'page_title' => 'Produk akan habis',
+    'page_title' => 'Produk Terlaris',
     'breadcumbs' => [
         [
             'title' => 'Produk',
             'link' => '#',
         ],
         [
-            'title' => 'Produk akan habis',
+            'title' => 'Produk Terlaris',
             'link' => '#',
         ],
     ],
-    'last_breadcumb' => 'Produk akan habis',
+    'last_breadcumb' => 'Produk Terlaris',
     'title' => 'Produk terlaris',
 ])
 @section('content')

@@ -1,16 +1,16 @@
 @extends('layouts.main', [
-    'page_title' => 'Laporan Penjualan',
+    'page_title' => 'Retur Penjualan',
     'breadcumbs' => [
         [
-            'title' => 'Laporan',
+            'title' => 'Laporan Penjualan',
             'link' => '#',
         ],
         [
-            'title' => 'Laporan penjualan',
+            'title' => 'Retur penjualan',
             'link' => '#',
         ],
     ],
-    'last_breadcumb' => 'Laporan penjualan',
+    'last_breadcumb' => 'Retur penjualan',
     'title' => 'Tambah retur penjualan',
 ])
 @section('content')
