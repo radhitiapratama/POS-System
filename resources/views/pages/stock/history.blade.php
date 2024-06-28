@@ -11,6 +11,7 @@
         ],
     ],
     'last_breadcumb' => 'Riwayat Stok Produk',
+    'title' => 'Riwayat stok',
 ])
 @section('content')
     <input type="hidden" name="filter_start_date">

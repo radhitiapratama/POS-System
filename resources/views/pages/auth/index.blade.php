@@ -1,10 +1,11 @@
 <html lang="en" dir="ltr" data-nav-layout="enable" loader="enable">
 
-<head><!-- Meta Data -->
+<head>
+    <!-- Meta Data -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>noa - Bootstrap 5 Premium Admin &amp; Dashboard Template</title>
+    <title>POS | Login</title>
     <!-- Favicon -->
     <link rel="icon" href="/noa-assets/assets/images/brand-logos/favicon.ico" type="image/x-icon">
     <!-- Main Theme Js -->

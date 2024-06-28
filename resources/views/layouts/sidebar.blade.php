@@ -35,8 +35,10 @@
                                     <li class="slide__category">
                                         <span class="category-name">Data Master</span>
                                     </li>
-                                    <li class="slide has-sub">
-                                        <a href="javascript:void(0);" class="side-menu__item">
+                                    <li
+                                        class="slide has-sub {{ Request::is('product', 'product-category', 'unit', 'product/create', 'product/*/edit', 'product-category/*', 'unit/*') ? 'open active' : '' }} ">
+                                        <a href="javascript:void(0);"
+                                            class="side-menu__item {{ Request::is('product', 'product-category', 'unit', 'product/create', 'product/*/edit', 'product-category/*', 'unit/*') ? 'active' : '' }}">
                                             <i class="ri-box-3-line side-menu__icon custom-sidebar-icon"></i>
                                             <span class="side-menu__label">Master Produk</span>
                                             <i class="fe fe-chevron-right side-menu__angle"></i>
@@ -46,17 +48,21 @@
                                             <li class="slide side-menu__label1">
                                                 <a href="javascript:void(0);">Master Produk</a>
                                             </li>
-                                            <li class="slide">
+                                            <li
+                                                class="slide {{ Request::is('product', 'product/create', 'product/*/edit') ? 'active' : '' }}">
                                                 <a href="{{ route('product.index') }}"
-                                                    class="side-menu__item">Produk</a>
+                                                    class="side-menu__item {{ Request::is('product', 'product/create', 'product/*/edit') ? 'active' : '' }}">Produk</a>
                                             </li>
-                                            <li class="slide">
+                                            <li
+                                                class="slide {{ Request::is('product-category', 'product-category/*') ? 'active' : '' }}">
                                                 <a href="{{ route('product-category.index') }}"
-                                                    class="side-menu__item">Kategori
+                                                    class="side-menu__item {{ Request::is('product-category', 'product-category/*') ? 'active' : '' }}">Kategori
                                                     Produk</a>
                                             </li>
-                                            <li class="slide">
-                                                <a href="{{ url('unit') }}" class="side-menu__item">Satuan Produk</a>
+                                            <li class="slide {{ Request::is('unit', 'unit/*') ? 'active' : '' }}">
+                                                <a href="{{ url('unit') }}"
+                                                    class="side-menu__item {{ Request::is('unit', 'unit/*') ? 'active' : '' }}">Satuan
+                                                    Produk</a>
                                             </li>
                                         </ul>
 
@@ -64,23 +70,27 @@
                                     </li>
                                     <li class="slide__category"><span class="category-name">Data Transaksi</span>
                                     </li>
-                                    <li class="slide">
-                                        <a href="{{ url('cashier') }}" class="side-menu__item">
+                                    <li class="slide {{ Request::is('cashier', 'cashier/*') ? 'active' : '' }}">
+                                        <a href="{{ url('cashier') }}"
+                                            class="side-menu__item {{ Request::is('cashier', 'cashier/*') ? 'active' : '' }}">
                                             <i class="ri-macbook-line side-menu__icon custom-sidebar-icon"></i>
                                             <span class="side-menu__label">Kasir
                                             </span>
                                         </a>
                                     </li>
-                                    <li class="slide">
-                                        <a href="{{ url('stock') }}" class="side-menu__item">
+                                    <li class="slide {{ Request::is('stock', 'stock/*') ? 'active' : '' }}">
+                                        <a href="{{ url('stock') }}"
+                                            class="side-menu__item {{ Request::is('stock', 'stock/*') ? 'active' : '' }}">
                                             <i
                                                 class="ri-checkbox-multiple-blank-line side-menu__icon custom-sidebar-icon"></i>
                                             <span class="side-menu__label">Stok Barang
                                             </span>
                                         </a>
                                     </li>
-                                    <li class="slide has-sub">
-                                        <a href="javascript:void(0);" class="side-menu__item">
+                                    <li
+                                        class="slide has-sub {{ Request::is('report/sales', 'report/sales/*', 'sales/*/return') ? 'open active' : '' }}">
+                                        <a href="javascript:void(0);"
+                                            class="side-menu__item {{ Request::is('report/sales', 'report/sales/*', 'sales/*/return') ? 'active' : '' }}">
                                             <i class="ri-file-list-3-line side-menu__icon custom-sidebar-icon"></i>
                                             <span class="side-menu__label">Laporan</span>
                                             <i class="fe fe-chevron-right side-menu__angle"></i>
@@ -89,28 +99,36 @@
                                             <li class="slide side-menu__label1">
                                                 <a href="javascript:void(0);">Laporan</a>
                                             </li>
-                                            <li class="slide">
-                                                <a href="{{ url('report/sales') }}" class="side-menu__item">Laporan
+                                            <li
+                                                class="slide {{ Request::is('report/sales', 'report/sales/*', 'sales/*/return') ? 'active' : '' }}">
+                                                <a href="{{ url('report/sales') }}"
+                                                    class="side-menu__item {{ Request::is('report/sales', 'report/sales/*', 'sales/*/return') ? 'active' : '' }}">Laporan
                                                     Penjualan</a>
                                             </li>
                                         </ul>
                                     </li>
-                                    <li class="slide">
-                                        <a href="{{ url('sales/return') }}" class="side-menu__item">
+                                    <li
+                                        class="slide {{ Request::is('sales/return', 'sales/return/*') ? 'active' : '' }}">
+                                        <a href="{{ url('sales/return') }}"
+                                            class="side-menu__item {{ Request::is('sales/return', 'sales/return/*') ? 'active' : '' }}">
                                             <i class="ri-text-wrap side-menu__icon custom-sidebar-icon"></i>
                                             <span class="side-menu__label">Retur Penjualan
                                             </span>
                                         </a>
                                     </li>
-                                    <li class="slide">
-                                        <a href="{{ url('product/best-selling') }}" class="side-menu__item">
+                                    <li
+                                        class="slide {{ Request::is('product/best-selling', 'product/best-selling/*') ? 'active' : '' }}">
+                                        <a href="{{ url('product/best-selling') }}"
+                                            class="side-menu__item  {{ Request::is('product/best-selling', 'product/best-selling/*') ? 'active' : '' }}">
                                             <i class="ri-line-chart-line side-menu__icon custom-sidebar-icon"></i>
                                             <span class="side-menu__label">Produk Terlaris
                                             </span>
                                         </a>
                                     </li>
-                                    <li class="slide">
-                                        <a href="{{ url('product/litte-stock') }}" class="side-menu__item">
+                                    <li
+                                        class="slide {{ Request::is('product/litte-stock', 'product/litte-stock/*') ? 'active' : '' }}">
+                                        <a href="{{ url('product/litte-stock') }}"
+                                            class="side-menu__item {{ Request::is('product/litte-stock', 'product/litte-stock/*') ? 'active' : '' }}">
                                             <i class="ri-alarm-warning-line side-menu__icon custom-sidebar-icon"></i>
                                             <span class="side-menu__label">Produk Akan Habis
                                             </span>

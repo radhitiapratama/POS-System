@@ -11,6 +11,7 @@
         ],
     ],
     'last_breadcumb' => 'Produk akan habis',
+    'title' => 'Produk terlaris',
 ])
 @section('content')
     <div class="row">

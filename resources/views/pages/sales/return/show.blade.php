@@ -11,6 +11,7 @@
         ],
     ],
     'last_breadcumb' => 'Detail',
+    'title' => 'Detail retur penjualan',
 ])
 @section('content')
     <div class="row">

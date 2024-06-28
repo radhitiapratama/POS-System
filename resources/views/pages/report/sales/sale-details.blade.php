@@ -15,6 +15,7 @@
         ],
     ],
     'last_breadcumb' => 'Detail penjualan',
+    'title' => 'Detail laporan penjualan',
 ])
 @section('content')
     <div class="card custom-card">

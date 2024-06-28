@@ -11,6 +11,7 @@
         ],
     ],
     'last_breadcumb' => 'Unit',
+    'title' => 'Edit Satuan',
 ])
 @section('content')
     <div class="card custom-card">

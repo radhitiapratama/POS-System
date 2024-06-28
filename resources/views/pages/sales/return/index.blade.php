@@ -7,6 +7,7 @@
         ],
     ],
     'last_breadcumb' => 'Retur Penjualan',
+    'title' => 'Retur penjualan',
 ])
 @section('content')
     <input type="hidden" name="filter_start_date">

@@ -7,6 +7,7 @@
         ],
     ],
     'last_breadcumb' => 'Kasir',
+    'title' => 'Kasir',
 ])
 @section('content')
     <input type="hidden" name="total_sales_hide">
