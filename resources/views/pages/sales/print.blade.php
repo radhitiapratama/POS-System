@@ -32,8 +32,7 @@
                 <td width='100%' align='CENTER' style="vertical-align: top">
                     <span style='color:black;'>
                         <b>POS SYSTEM</b>
-                        </br>
-                        JL XXXXXXXXXXX XXXXXXX
+                        {{-- JL XXXXXXXXXXX XXXXXXX --}}
                     </span>
                     </br>
                     <span style='font-size:8pt'>No Faktur : {{ $sales->number_invoice }}</span></br>
