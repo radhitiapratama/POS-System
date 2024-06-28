@@ -26,7 +26,7 @@
         <div class="col-xl-12">
             <div class="card custom-card">
                 <div class="card-header row">
-                    <div class="col-12 col-md-5">
+                    <div class="col-12 col-md-5 mb-3">
                         <label for="filter_date_range" class="form-label">Filter Tanggal</label>
                         <div class="input-group w-100">
                             <div class="input-group-text border-0"> <i class="ri-calendar-line"></i> </div>
@@ -34,10 +34,13 @@
                                 placeholder="Pilih..." readonly="readonly">
                         </div>
                     </div>
-                    <div class="col-12 col-md-3">
+                    <div class="col-12 col-md-3 mb-3">
                         <label for="" class="form-label">Nomor Invoice</label>
                         <input type="text" class="form-control" id="input" class="form-control"
                             placeholder="Cari berdasarkan No Invoice" name="filter_no_inv">
+                    </div>
+                    <div class="col-12 mb-3">
+                        <button class="btn btn-primary" id="clear-filter">Bersihkan Filter</button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -210,13 +213,27 @@
                 let endDateFormat = endDate.getFullYear() + '-' + (endDate.getMonth() + 1) + '-' + endDate
                     .getDate();
 
-                $("input[name='filter_start_date']").val(startDateFormat)
-                $("input[name='filter_end_date']").val(endDateFormat)
+                console.log(dateStr);
+
+                $("input[name='filter_start_date']").val("")
+                $("input[name='filter_end_date']").val("")
+
+                if (dateStr != "") {
+                    $("input[name='filter_start_date']").val(startDateFormat)
+                    $("input[name='filter_end_date']").val(endDateFormat)
+                }
 
                 if (selectedDates.length == 2 || startDateFormat == endDateFormat) {
                     reloadDatatable()
                 }
             }
+        })
+
+        $("#clear-filter").click(function() {
+            fp_daterange.clear()
+            $("input[name='filter_start_date']").val("");
+            $("input[name='filter_end_date']").val("");
+            $("input[name='filter_no_inv']").val("");
         })
     </script>
 @endpush
