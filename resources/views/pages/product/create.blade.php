@@ -92,7 +92,7 @@
                 <div class="mb-3">
                     <label for="barcode" class="form-label fs-14 text-dark">Barcode</label>
                     <input type="text" class="form-control" id="barcode" name="barcode" placeholder=""
-                        value="{{ old('barcode') }}" maxlength="255" required>
+                        value="{{ old('barcode') }}" maxlength="255" autocomplete="off" required>
                     @error('barcode')
                         <div class="text-danger mt-2" id="barcode">
                             {{ $message }}
