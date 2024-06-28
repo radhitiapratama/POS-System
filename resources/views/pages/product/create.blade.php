@@ -31,7 +31,7 @@
                 <div class="mb-3">
                     <label for="name" class="form-label fs-14 text-dark">Nama</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder=""
-                        value="{{ old('name') }}">
+                        value="{{ old('name') }}" required>
                     @error('name')
                         <div class="text-danger mt-2" id="name">
                             {{ $message }}
@@ -41,7 +41,7 @@
                 <div class="mb-3">
                     <label for="category_id" class="form-label fs-14 text-dark">Kategori</label>
                     <select name="category_id" id="category_id" class="form-control">
-                        <option value="">Pilih...</option>
+                        <option value="">Pilih...</option required>
                         @foreach ($categories as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
@@ -54,7 +54,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="unit_id" class="form-label fs-14 text-dark">Satuan</label>
-                    <select name="unit_id" id="unit_id" class="form-control">
+                    <select name="unit_id" id="unit_id" class="form-control" required>
                         <option value="">Pilih...</option>
                         @foreach ($units as $unit)
                             <option value="{{ $unit->id }}">{{ $unit->name }}</option>
@@ -71,7 +71,7 @@
                     <div class="input-group">
                         <div class="input-group-text">RP</div>
                         <input type="text" class="form-control" id="selling_price" name="selling_price" placeholder=""
-                            value="{{ old('selling_price') }}">
+                            value="{{ old('selling_price') }}" required>
                     </div>
                     @error('selling_price')
                         <div class="text-danger mt-2" id="selling_price">
@@ -82,7 +82,7 @@
                 <div class="mb-3">
                     <label for="stock_limit" class="form-label fs-14 text-dark">Stok Limit</label>
                     <input type="text" class="form-control" id="stock_limit" name="stock_limit" placeholder=""
-                        value="{{ old('stock_limit') }}">
+                        value="{{ old('stock_limit') }}" required>
                     @error('stock_limit')
                         <div class="text-danger mt-2" id="stock_limit">
                             {{ $message }}
@@ -92,7 +92,7 @@
                 <div class="mb-3">
                     <label for="barcode" class="form-label fs-14 text-dark">Barcode</label>
                     <input type="text" class="form-control" id="barcode" name="barcode" placeholder=""
-                        value="{{ old('barcode') }}" maxlength="255">
+                        value="{{ old('barcode') }}" maxlength="255" required>
                     @error('barcode')
                         <div class="text-danger mt-2" id="barcode">
                             {{ $message }}
@@ -133,6 +133,13 @@
 
         new AutoNumeric("#selling_price", autoNumericOptions)
         new AutoNumeric("#stock_limit", autoNumericOptions)
+
+        $(document).on('paste', '#barcode', function(e) {
+            e.preventDefault();
+            var withoutSpaces = e.originalEvent.clipboardData.getData('Text');
+            withoutSpaces = withoutSpaces.replace(/\s+/g, '');
+            $(this).val(withoutSpaces);
+        });
     </script>
 @endpush
 

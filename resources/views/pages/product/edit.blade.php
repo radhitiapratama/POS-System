@@ -33,7 +33,7 @@
                 <div class="mb-3">
                     <label for="barcode" class="form-label fs-14 text-dark">Barcode</label>
                     <input type="text" class="form-control" id="barcode" name="barcode" placeholder=""
-                        value="{{ old('barcode', $product->barcode) }}" maxlength="255">
+                        value="{{ old('barcode', $product->barcode) }}" maxlength="255" required>
                     @error('barcode')
                         <div class="text-danger mt-2" id="barcode">
                             {{ $message }}
@@ -43,7 +43,7 @@
                 <div class="mb-3">
                     <label for="name" class="form-label fs-14 text-dark">Nama</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder=""
-                        value="{{ old('name', $product->name) }}">
+                        value="{{ old('name', $product->name) }}" required>
                     @error('name')
                         <div class="text-danger mt-2" id="name">
                             {{ $message }}
@@ -52,7 +52,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="category_id" class="form-label fs-14 text-dark">Kategori</label>
-                    <select name="category_id" id="category_id" class="form-control">
+                    <select name="category_id" id="category_id" class="form-control" required>
                         <option value="">Pilih...</option>
                         @foreach ($categories as $category)
                             <option value="{{ $category->id }}" @selected(old('category_id', $product->category->id) == $category->id)>{{ $category->name }}</option>
@@ -66,7 +66,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="unit_id" class="form-label fs-14 text-dark">Satuan</label>
-                    <select name="unit_id" id="unit_id" class="form-control">
+                    <select name="unit_id" id="unit_id" class="form-control" required>
                         <option value="">Pilih...</option>
                         @foreach ($units as $unit)
                             <option value="{{ $unit->id }}" @selected(old('unit_id', $product->unit->id) == $unit->id)>{{ $unit->name }}</option>
@@ -83,7 +83,7 @@
                     <div class="input-group">
                         <div class="input-group-text">RP</div>
                         <input type="text" class="form-control" id="selling_price" name="selling_price" placeholder=""
-                            value="{{ old('selling_price', $product->selling_price) }}">
+                            value="{{ old('selling_price', $product->selling_price) }}" required>
                     </div>
                     @error('selling_price')
                         <div class="text-danger mt-2" id="selling_price">
@@ -94,7 +94,7 @@
                 <div class="mb-3">
                     <label for="stock_limit" class="form-label fs-14 text-dark">Stok Limit</label>
                     <input type="text" class="form-control" id="stock_limit" name="stock_limit" placeholder=""
-                        value="{{ old('stock_limit', $product->stock_limit) }}">
+                        value="{{ old('stock_limit', $product->stock_limit) }}" required>
                     @error('stock_limit')
                         <div class="text-danger mt-2" id="stock_limit">
                             {{ $message }}
@@ -134,6 +134,13 @@
 
         new AutoNumeric("#selling_price", autoNumericOptions)
         new AutoNumeric("#stock_limit", autoNumericOptions)
+
+        $(document).on('paste', '#barcode', function(e) {
+            e.preventDefault();
+            var withoutSpaces = e.originalEvent.clipboardData.getData('Text');
+            withoutSpaces = withoutSpaces.replace(/\s+/g, '');
+            $(this).val(withoutSpaces);
+        });
     </script>
 @endpush
 
