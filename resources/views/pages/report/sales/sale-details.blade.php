@@ -44,7 +44,7 @@
                                         aria-describedby="datatable-basic_info">
                                         <thead>
                                             <tr>
-                                                <th width="5">#</th>
+                                                <th style="max-width: 5px">#</th>
                                                 <th style="max-width: 30%">Produk</th>
                                                 <th style="max-width: 20%">Qty</th>
                                                 <th style="max-width: 20%">Harga</th>

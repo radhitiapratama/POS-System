@@ -54,11 +54,11 @@
                                         aria-describedby="datatable-basic_info">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
-                                                <th>Produk</th>
-                                                <th>Kategori</th>
-                                                <th>Stok</th>
-                                                <th>Stok limit</th>
+                                                <th style="max-width: 5px">#</th>
+                                                <th style="max-width: 40%">Produk</th>
+                                                <th style="max-width: 20%">Kategori</th>
+                                                <th style="max-width: 20%">Stok</th>
+                                                <th style="max-width: 20%">Stok limit</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -139,20 +139,32 @@
                     },
                     {
                         data: 'name',
-                        name: 'name'
+                        name: 'name',
+                        render: function(data, type, row, meta) {
+                            return ` <div class="text-wrap" style="max-width: 100%;">${data}</div>`
+                        }
                     },
 
                     {
                         data: 'category.name',
-                        name: 'category.name'
+                        name: 'category.name',
+                        render: function(data, type, row, meta) {
+                            return ` <div class="text-wrap" style="max-width: 100%;">${data}</div>`
+                        }
                     },
                     {
                         data: 'stock.stock',
-                        name: 'stock.stock'
+                        name: 'stock.stock',
+                        render: function(data, type, row, meta) {
+                            return ` <div class="text-wrap" style="max-width: 100%;">${data}</div>`
+                        }
                     },
                     {
                         data: 'stock_limit',
-                        name: 'stock_limit'
+                        name: 'stock_limit',
+                        render: function(data, type, row, meta) {
+                            return ` <div class="text-wrap" style="max-width: 100%;">${data}</div>`
+                        }
                     },
                 ]
             });

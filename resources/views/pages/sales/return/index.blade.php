@@ -54,13 +54,13 @@
                                         aria-describedby="datatable-basic_info">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
-                                                <th>Tanggal</th>
-                                                <th>No Invoice</th>
-                                                <th>Produk</th>
-                                                <th>Qty</th>
-                                                <th>Total</th>
-                                                <th>Action</th>
+                                                <th style="max-width: 5px">#</th>
+                                                <th style="max-width: 20%">Tanggal</th>
+                                                <th style="max-width: 20%">No Invoice</th>
+                                                <th style="max-width: 20%">Produk</th>
+                                                <th style="max-width: 15%">Qty</th>
+                                                <th style="max-width: 15%">Total</th>
+                                                <th style="max-width: 10%">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -156,10 +156,16 @@
                     {
                         data: "sale_details.number_invoice",
                         name: "sale_details.number_invoice",
+                        render: function(data, type, row) {
+                            return `<div class='text-wrap' style="max-width: 200px; !important">${data}</div>`
+                        }
                     },
                     {
                         data: 'sale_details.name',
-                        name: 'sale_details.name'
+                        name: 'sale_details.name',
+                        render: function(data, type, row) {
+                            return `<div class='text-wrap' style="max-width: 200px; !important">${data}</div>`
+                        }
                     },
 
                     {
@@ -179,6 +185,9 @@
                     {
                         data: 'action',
                         name: 'action',
+                        render: function(data, type, row) {
+                            return `<div class='text-wrap' style="max-width: 200px; !important">${data}</div>`
+                        },
                         orderable: false,
                         searchable: false
                     },

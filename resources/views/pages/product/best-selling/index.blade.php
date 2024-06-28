@@ -48,10 +48,10 @@
                                         aria-describedby="datatable-basic_info">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
-                                                <th>Produk</th>
-                                                <th>Qty terjual</th>
-                                                <th>Total</th>
+                                                <th style="max-width: 5px;">#</th>
+                                                <th style="max-width: 50%">Produk</th>
+                                                <th style="max-width: 25%">Qty terjual</th>
+                                                <th style="max-width: 25%">Total</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -108,7 +108,6 @@
                 processing: true,
                 serverSide: true,
                 searchDelay: 1200,
-                ordering: false,
                 searching: false,
                 ajax: {
                     url: '{{ url()->current() }}',
@@ -137,7 +136,11 @@
                     },
                     {
                         data: 'product.name',
-                        name: 'product.name'
+                        name: 'product.name',
+                        orderable: false,
+                        render: function(data, type, row, meta) {
+                            return ` <div class="text-wrap" style="max-width: 100%;">${data}</div>`
+                        }
                     },
                     {
                         data: 'qty_sold',
