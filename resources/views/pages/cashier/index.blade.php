@@ -32,23 +32,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="text-center text-wrap">1</td>
-                                    <td class="text-wrap">Produk 1</td>
-                                    <td class="text-wrap">Rp 5.000</td>
-                                    <td class="text-wrap"style="max-width: 60px">
-                                        <span>1</span>
-                                        <button class="btn btn-sm btn-primary btn-add-qty-cart" data-id="">+</button>
-                                    </td>
-                                    <td class="text-wrap">
-                                        Rp 10.000
-                                    </td>
-                                    <td class="text-center text-wrap" style="max-width: 50px">
-                                        <button class="btn btn-icon btn-danger btn-wave">
-                                            <i class="ri-delete-bin-line"></i>
-                                        </button>
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
