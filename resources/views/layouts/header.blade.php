@@ -57,12 +57,12 @@
                     data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                     <div class="d-flex align-items-center">
                         <div class="me-sm-2 me-0">
-                            <img src="/noa-assets/assets/images/faces/6.jpg" alt="img" width="32"
+                            <img src="{{ asset('assets/img/default-profile.png') }}" alt="img" width="32"
                                 height="32" class="rounded-circle">
                         </div>
                         <div class="d-sm-block d-none">
                             <p class="fw-semibold mb-0 lh-1 profile-heading d-flex align-items-center">
-                                Elena
+                                {{ auth()->user()->name }}
                                 <span class="ms-1">
                                     <i class="ri-arrow-down-s-line"></i>
                                 </span>
