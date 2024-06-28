@@ -135,13 +135,13 @@
                     let json = data.json
                     console.log(json);
                 },
-                order: [4, "DESC"],
+                order: [1, "DESC"],
                 columnDefs: [{
                     width: '5px',
                     targets: [0, 6]
                 }, {
                     orderable: false,
-                    targets: [1, 2, 3, 4, 5]
+                    targets: [2, 3, 4, 5]
                 }],
                 columns: [{
                         data: 'DT_RowIndex',
