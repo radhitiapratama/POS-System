@@ -266,6 +266,12 @@ class ProductController extends Controller
     {
         $products = Product::where("name", "LIKE", '%' . $request->q . '%')
             ->orWhere("barcode", 'LIKE', '%' . $request->q . '%')
+            ->whereHas("category", function ($q) {
+                $q->whereNull("deleted_at");
+            })
+            ->whereHas("unit", function ($q) {
+                $q->whereNull("deleted_at");
+            })
             ->get();
 
         return response()->json($products);
