@@ -251,7 +251,7 @@ class ProductController extends Controller
 
             return redirect()->route("product.index")
                 ->with("success", "Sukses")
-                ->with("success_message", "Kategori " . $request->name  . " berhasil di hapus");
+                ->with("success_message", "Produk " . $request->name  . " berhasil di hapus");
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->withInput()
