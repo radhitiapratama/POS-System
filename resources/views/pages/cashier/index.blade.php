@@ -474,19 +474,23 @@
                                     return
                                 }
 
+                                localStorage.setItem("cart", JSON.stringify(response.cart))
+                                $("input[name='pay']").val("0")
+                                loadCart()
+                                calcTotalSales()
+                                calcReturn()
+
                                 Swal.fire({
                                     title: response.title,
                                     text: response.message,
                                     icon: "success",
                                     confirmButtonColor: "#3085d6",
                                     confirmButtonText: "Ok",
+                                }).then((response) => {
+                                    if (response.isConfirmed) {
+                                        // window.location.reload()
+                                    }
                                 });
-
-                                localStorage.setItem("cart", JSON.stringify(response.cart))
-                                $("input[name='pay']").val("0")
-                                loadCart()
-                                calcTotalSales()
-                                calcReturn()
 
                                 let sales_id = response.sales_id
                                 window.open(base_url + `sales/${sales_id}/print`, "_blank")
