@@ -341,21 +341,36 @@ class ProductController extends Controller
             //     'b' => $month_end
             // ]);
 
+            // $model = SaleDetails::with(['product'])
+            //     ->whereHas('product', function ($q) {
+            //         $q->whereNull('deleted_at');
+            //     })
+            //     ->addSelect([
+            //         'sale_details.*',
+            //         DB::raw('(SELECT SUM(qty) FROM sale_details as sd 
+            //               WHERE sd.product_id = sale_details.product_id 
+            //               AND sd.created_at >= "' . $month_start . '" 
+            //               AND sd.created_at <= "' . $month_end . '" GROUP BY sd.product_id) as qty_sold'),
+            //         DB::raw('(SELECT SUM(qty * price) FROM sale_details as sd 
+            //               WHERE sd.product_id = sale_details.product_id 
+            //               AND sd.created_at >= "' . $month_start . '" 
+            //               AND sd.created_at <= "' . $month_end . '" GROUP BY sd.product_id) as total_sold')
+            //     ])
+            //     ->groupBy('sale_details.product_id')
+            //     ->havingRaw('qty_sold > 0')
+            //     ->havingRaw('total_sold > 0');
+
             $model = SaleDetails::with(['product'])
                 ->whereHas('product', function ($q) {
                     $q->whereNull('deleted_at');
                 })
-                ->addSelect([
-                    'sale_details.*',
-                    DB::raw('(SELECT SUM(qty) FROM sale_details as sd 
-                          WHERE sd.product_id = sale_details.product_id 
-                          AND sd.created_at >= "' . $month_start . '" 
-                          AND sd.created_at <= "' . $month_end . '") as qty_sold'),
-                    DB::raw('(SELECT SUM(qty * price) FROM sale_details as sd 
-                          WHERE sd.product_id = sale_details.product_id 
-                          AND sd.created_at >= "' . $month_start . '" 
-                          AND sd.created_at <= "' . $month_end . '") as total_sold')
-                ])
+                ->whereBetween('created_at', [$month_start, $month_end])
+                ->select(
+                    'product_id',
+                    DB::raw('SUM(qty) as qty_sold'),
+                    DB::raw('SUM(qty * price) as total_sold')
+                )
+                ->groupBy('product_id')
                 ->havingRaw('qty_sold > 0')
                 ->havingRaw('total_sold > 0');
 
