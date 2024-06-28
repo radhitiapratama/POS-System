@@ -11,7 +11,6 @@ use App\Models\Stock;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
-use Symfony\Component\CssSelector\Node\FunctionNode;
 
 class ProductController extends Controller
 {
@@ -291,6 +290,8 @@ class ProductController extends Controller
         if ($request->ajax()) {
             $filter_category = $request->filter_category;
 
+            $search = $request->input("search.value");
+
             $model = Product::query()
                 ->with([
                     'category',
@@ -308,9 +309,13 @@ class ProductController extends Controller
 
             return DataTables::eloquent($model)
                 ->addIndexColumn()
-                ->filter(function ($q) use ($filter_category) {
+                ->filter(function ($q) use ($filter_category, $search) {
                     if ($filter_category != null) {
                         $q->where("category_id", $filter_category);
+                    }
+
+                    if ($search != null) {
+                        $q->where("name", "LIKE", "%" . $search . "%");
                     }
                 })
                 ->editColumn("stock.stock", function ($model) {
