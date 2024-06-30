@@ -488,7 +488,7 @@
                                     confirmButtonText: "Ok",
                                 }).then((response) => {
                                     if (response.isConfirmed) {
-                                        // window.location.reload()
+                                        window.location.reload()
                                     }
                                 });
 
