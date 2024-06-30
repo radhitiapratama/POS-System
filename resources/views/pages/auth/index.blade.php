@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>POS | Login</title>
     <!-- Favicon -->
-    <link rel="icon" href="/noa-assets/assets/images/brand-logos/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="{{ asset('assets/img/logo-pos.png') }}" type="image/png">
     <!-- Main Theme Js -->
     <script src="/noa-assets/assets/js/authentication-main.js"></script>
     <!-- Sweetalerts CSS -->
