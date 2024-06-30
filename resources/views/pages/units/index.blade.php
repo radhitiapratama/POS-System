@@ -29,7 +29,7 @@
                         <div class="btn-list">
                             <a href="{{ route('unit.create') }}" class="btn btn-primary label-btn">
                                 <i class="ri-add-circle-line me-1 label-btn-icon"></i>
-                                Tambah Unit Kategori
+                                Tambah Satuan
                             </a>
                         </div>
                     </div>
