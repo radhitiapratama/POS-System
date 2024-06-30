@@ -2,12 +2,10 @@
     <!-- Start::main-sidebar-header -->
     <div class="main-sidebar-header">
         <a href="{{ url('cashier') }}" class="header-logo">
-            <img src="/noa-assets/assets/images/brand-logos/desktop-logo.png" alt="logo" class="desktop-logo">
-            <img src="/noa-assets/assets/images/brand-logos/toggle-logo.png" alt="logo" class="toggle-logo">
-            <img src="/noa-assets/assets/images/brand-logos/desktop-dark.png" alt="logo" class="desktop-dark">
-            <img src="/noa-assets/assets/images/brand-logos/toggle-dark.png" alt="logo" class="toggle-dark">
-            <img src="/noa-assets/assets/images/brand-logos/desktop-dark.png" alt="logo" class="desktop-white">
-            <img src="/noa-assets/assets/images/brand-logos/toggle-dark.png" alt="logo" class="toggle-white">
+            <img src="{{ asset('assets/img/logo-pos.png') }}" alt="logo"
+                style="max-width: 100px; height: 100px; object-fit: cover" class="desktop-logo">
+            <img src="{{ asset('assets/img/logo.png') }}" alt="logo"
+                style="max-width: 80px; height: 80px; object-fit: cover" class="toggle-logo">
         </a>
     </div>
     <!-- End::main-sidebar-header -->

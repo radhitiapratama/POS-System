@@ -31,14 +31,15 @@
             <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-6 col-sm-8 col-12">
                 <div class="my-4 d-flex justify-content-center">
                     <a href="index.html">
-                        <img src="/noa-assets/assets/images/brand-logos/desktop-dark.png" alt="logo" class="">
+
                     </a>
                 </div>
                 <div class="card custom-card">
                     <form action="{{ url('login') }}" method="post">
                         @csrf
                         <div class="card-body p-4 pb-3">
-                            <h4 class="fw-semibold mb-4 text-center">Login</h4>
+                            <img src="{{ asset('assets/img/logo-pos.png') }}" style="object-fit: cover" alt="logo"
+                                class="m-auto d-block">
                             <div class="mb-3">
                                 <label for="form-text1" class="form-label fs-14 text-dark">Username</label>
                                 <div class="input-box">
