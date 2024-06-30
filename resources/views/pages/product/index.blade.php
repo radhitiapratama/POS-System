@@ -44,14 +44,14 @@
                                         aria-describedby="datatable-basic_info">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
-                                                <th>Barcode</th>
-                                                <th>Nama</th>
-                                                <th>Kategori</th>
-                                                <th>Satuan</th>
-                                                <th>Harga Jual</th>
-                                                <th>Stok Limit</th>
-                                                <th>Action</th>
+                                                <th style="max-width: 5px">#</th>
+                                                <th style="max-width: 25%">Barcode</th>
+                                                <th style="max-width: 25%">Nama</th>
+                                                <th style="max-width: 10%">Kategori</th>
+                                                <th style="max-width: 10%">Satuan</th>
+                                                <th style="max-width: 20%">Harga Jual</th>
+                                                <th style="max-width: 10%">Stok Limit</th>
+                                                <th style="max-width: 5px">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -121,36 +121,54 @@
                     data: 'barcode',
                     name: 'barcode',
                     render: function(data, type, row) {
-                        return `<div class='text-wrap' style="max-width: 200px; !important">${data}</div>`
+                        return `<div class='text-wrap' style="max-width: 100%;">${data}</div>`
                     }
                 },
                 {
                     data: 'name',
-                    name: 'name'
+                    name: 'name',
+                    render: function(data, type, row) {
+                        return `<div class='text-wrap' style="max-width: 100%;">${data}</div>`
+                    }
                 },
 
                 {
                     data: 'category.name',
-                    name: 'category.name'
+                    name: 'category.name',
+                    render: function(data, type, row) {
+                        return `<div class='text-wrap' style="max-width: 100%;">${data}</div>`
+                    }
                 },
 
                 {
                     data: 'unit.name',
-                    name: 'unit.name'
+                    name: 'unit.name',
+                    render: function(data, type, row) {
+                        return `<div class='text-wrap' style="max-width: 100%;">${data}</div>`
+                    }
                 },
                 {
                     data: 'selling_price',
-                    name: 'selling_price'
+                    name: 'selling_price',
+                    render: function(data, type, row) {
+                        return `<div class='text-wrap' style="max-width: 100%;">${data}</div>`
+                    }
                 },
                 {
                     data: 'stock_limit',
-                    name: 'stock_limit'
+                    name: 'stock_limit',
+                    render: function(data, type, row) {
+                        return `<div class='text-wrap' style="max-width: 100%;">${data}</div>`
+                    }
                 },
                 {
                     data: 'action',
                     name: 'action',
                     orderable: false,
-                    searchable: false
+                    searchable: false,
+                    render: function(data, type, row) {
+                        return `<div class='text-wrap' style="max-width: 100%;">${data}</div>`
+                    }
                 },
             ]
         });
